@@ -25,7 +25,7 @@ const HeaderContainer = styled.div`
     position: fixed;
     top:0;
     right: 0;
-    font-size: 29px;
+    font-size: 30px;
     color: #fff;
        
 
