@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import { VscChevronDown,VscChevronUp } from "react-icons/vsc";
 import { Navigate } from "react-router-dom";
-import Search from "./search";
+import Search from "./Search";
 import { useState } from "react";
 
 export default function Header(){
