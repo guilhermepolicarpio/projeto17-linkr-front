@@ -1,16 +1,23 @@
 import React from "react";
 import  ReactDOM  from "react-dom";
 import { Route, Routes, BrowserRouter } from "react-router-dom";
-import Header from "./layouts/header";
+import Home from "./pages/Home";
+import GlobalStyle from "./styles/globalStyles";
 
 const rootHtml= document.querySelector(".root");
 
 export default function App(){
 
     return(
-        <BrowserRouter>
-            <Header/>
-        </BrowserRouter>
+        <>
+            <GlobalStyle />
+            <BrowserRouter>
+                <Routes>
+                <Route path="/" element={<Home />} />
+                </Routes>
+            </BrowserRouter>
+        </>
     )
 }
+
 ReactDOM.render(<App />, rootHtml);
