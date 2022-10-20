@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { ThreeDots } from "react-loader-spinner";
 import { useNavigate } from "react-router-dom";
-import { InputsBox, LinkToSignUpPage, Logo, LogoBox, PageContainer, TagLine } from "../css/signIn&signUpStyle";
+import { InputsBox, LinkToSignUpPage, Logo, LogoBox, PageContainer, TagLine } from '../styles/signIn&signUpStyle';
 import { postLogin } from "../service/API";
 import Swal from 'sweetalert2'
 

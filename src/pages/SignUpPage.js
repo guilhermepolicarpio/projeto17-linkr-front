@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { InputsBox, LinkToSignUpPage, Logo, LogoBox, PageContainer, TagLine } from "../css/signIn&signUpStyle"
+import { InputsBox, LinkToSignUpPage, Logo, LogoBox, PageContainer, TagLine } from '../styles/signIn&signUpStyle'
 import {ThreeDots} from 'react-loader-spinner'
 import Swal from 'sweetalert2'
 import { useNavigate } from "react-router-dom";
@@ -70,7 +70,7 @@ export default function SignUpPage(){
                 <input required disabled={inputState} type="text" name="username" placeholder="username" value={form.username} onChange={handleForm}></input>
                 <input required disabled={inputState} type="text" name="pictureUrl" placeholder="picture url" value={form.pictureUrl} onChange={handleForm}></input>
                 {loading?<button>Sign Up</button> : <button disabled={inputState}><ThreeDots color="#FFFFFF" height={20} width={50}/></button> } 
-                <LinkToSignUpPage to='/'>Switch back to log in</LinkToSignUpPage>              
+                <LinkToSignUpPage to='/login'>Switch back to log in</LinkToSignUpPage>              
             </InputsBox>
         </PageContainer>
     )
