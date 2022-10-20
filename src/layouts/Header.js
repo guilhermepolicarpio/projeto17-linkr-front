@@ -6,7 +6,7 @@ import { useState } from "react";
 
 export default function Header(){
 
-    const [logout, setLogout] = useState(false)
+    const [logout, setLogout] = useState(false);
 
     function changeLogout(){
         setLogout(!logout)
