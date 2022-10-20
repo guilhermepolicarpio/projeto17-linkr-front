@@ -1,9 +1,16 @@
 import styled from "styled-components"
 import { DebounceInput } from "react-debounce-input"
+import { useState } from "react"
+import {AiOutlineSearch} from "react-icons/ai"
 
 export default function Search(){
 
+    const [value,setValue] = useState([])
+    const [search,SetSearch] = useState(false)
 
+    console.log(value)
+
+    // Fazer comunicação com servidor para efetuar as buscas
     return (
 
         <SearchContainer>
@@ -11,9 +18,12 @@ export default function Search(){
         minLength={3}
         debounceTimeout={300}
         placeholder="Search for people"
-        //onChange para buscar
-        
+        onChange={(e) => setValue(e.target.value)}
+
         />
+        <AiOutlineSearch  className="searchIcon"/>
+
+       
 
         </SearchContainer>
     )
@@ -31,7 +41,7 @@ const SearchContainer = styled.div`
     input{
         position: relative;
         width: 100%;
-        height: 50%;
+        height: 67%;
         font-family: 'Lato', sans-serif;
         padding-left: 17px;
         font-style: normal;
@@ -40,5 +50,12 @@ const SearchContainer = styled.div`
         line-height: 23px;
         border-radius: 8px;
         background-color: #ffffff;
+    }
+
+    .searchIcon{
+        position: absolute;
+        right: 15px;
+        z-index: 1;
+        color:#C6C6C6;
     }
 `
