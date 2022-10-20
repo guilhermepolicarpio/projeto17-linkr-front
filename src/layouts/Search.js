@@ -6,19 +6,24 @@ import {AiOutlineSearch} from "react-icons/ai"
 export default function Search(){
 
     const [value,setValue] = useState([])
+    const [search,SetSearch] = useState(false)
 
     console.log(value)
+
+    // Fazer comunicação com servidor para efetuar as buscas
     return (
 
         <SearchContainer>
         <DebounceInput
         minLength={3}
-        debounceTimeout={100}
+        debounceTimeout={300}
         placeholder="Search for people"
         onChange={(e) => setValue(e.target.value)}
 
         />
         <AiOutlineSearch  className="searchIcon"/>
+
+       
 
         </SearchContainer>
     )
