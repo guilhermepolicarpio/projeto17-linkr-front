@@ -6,25 +6,34 @@ import { useState } from "react";
 
 export default function Header(){
 
-    const [logout, setLogout] = useState(false)
-
-    function changeLogout(){
-        setLogout(!logout)
+    const [logout, setLogout] = useState(true)
+    
+    function logoutUser(){
+        console.log("usuario deslogado")
     }
+
+    console.log(logout)
+
     return(
 
         <HeaderContainer>
             <h1 /*onClick ={() => Navigate('/home')}*/>linkr</h1>
             <Search/>
-            <UserMenu onClick={changeLogout}>
+            <UserMenu toggle={logout}>
                 {
-                    !logout ?
-                    <VscChevronDown/>
+                    logout ?
+                    <VscChevronDown onClick={() => setLogout(false)}/>
                     :
-                    <VscChevronUp/>
+                    <>
+                    <VscChevronUp onClick={() => setLogout(true)}/>
+                    <LogOutBox onClick={logoutUser} >
+                        Logout
+                    </LogOutBox>
+                    </>
                 }
                 <img src = "https://s2.glbimg.com/13jIhS8n-xVsR7vxPAJSdXUu2Z8=/480x543/middle/smart/i.s3.glbimg.com/v1/AUTH_e84042ef78cb4708aeebdf1c68c6cbd6/internal_photos/bs/2022/u/9/YZS2J1TMGNDnaxKkOkSA/rindo-de-nervoso.png" alt ="provisoria"/>
             </UserMenu>
+            
         </HeaderContainer>
     )
 }
@@ -65,6 +74,7 @@ const UserMenu = styled.div`
     align-items: center;
     margin: 18px 18px;
     font-size: 30px;
+    cursor: pointer;
 
     img{
         width: 53px;
@@ -83,3 +93,27 @@ const UserMenu = styled.div`
         }
     }*/
 `;
+const LogOutBox = styled.div`
+
+    display: flex;
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 17px;
+    line-height: 20px;
+    letter-spacing: 0.05em;
+    color: #FFFFFF;
+    background: #171717;
+    border-radius: 0px 0px 20px 20px;
+    width: 150px;
+    height: 47px;
+    position: absolute;
+    right: 0;
+    top: 72px;
+    z-index:1;
+
+    align-items: center;
+    justify-content: center;
+    
+
+`
