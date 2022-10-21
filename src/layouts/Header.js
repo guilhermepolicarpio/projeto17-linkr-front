@@ -8,7 +8,7 @@ import { useState } from "react";
 export default function Header(){
 
     const [logout, setLogout] = useState(true);
-    const navigate = useNavigate();
+    const navigate = useNavigate();;
  
     const userProfilePicture = JSON.parse(localStorage.getItem('linkr'));
     

@@ -38,7 +38,10 @@ export default function SignUpPage(){
             })
             navigate('/');
         }).catch((error)=>{
+<<<<<<< HEAD
             console.log(error);
+=======
+>>>>>>> main
             Swal.fire({
                 icon: 'error',
                 title: 'Ops...',
@@ -71,6 +74,7 @@ export default function SignUpPage(){
                 <input required disabled={inputState} type="text" name="username" placeholder="username" value={form.username} onChange={handleForm}></input>
                 <input required disabled={inputState} type="text" name="pictureUrl" placeholder="picture url" value={form.pictureUrl} onChange={handleForm}></input>
                 {loading?<button>Sign Up</button> : <button disabled={inputState}><ThreeDots color="#FFFFFF" height={20} width={50}/></button> } 
+<<<<<<< HEAD
                 <LinkToSignUpPage to='/login'>Switch back to log in</LinkToSignUpPage>              
             </InputsBox>
         </PageContainer>
@@ -173,3 +177,10 @@ display: flex;
 justify-content: center;
 align-items: center;
 `
+=======
+                <LinkToSignUpPage to='/'>Switch back to log in</LinkToSignUpPage>              
+            </InputsBox>
+        </PageContainer>
+    )
+}
+>>>>>>> main
