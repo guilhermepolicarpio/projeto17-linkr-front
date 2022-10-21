@@ -5,13 +5,8 @@ import {AiOutlineSearch} from "react-icons/ai";
 
 export default function Search({setLogout,logout}){
 
-<<<<<<< HEAD
     const [value,setValue] = useState([])
     const [search,SetSearch] = useState(true)
-=======
-    const [value,setValue] = useState([]);
-    const [search,SetSearch] = useState(false);
->>>>>>> main
 
     function inputClick(){
         if(logout === false){
@@ -19,25 +14,12 @@ export default function Search({setLogout,logout}){
         };    
     }
 
-    function InputController(e){
-        if(e.keyCode === 27){
-            SetSearch(false)
-        }
-    }
 
     console.log(search)
     // Fazer comunicação com servidor para efetuar as buscas
     return (
 
         <SearchContainer>
-<<<<<<< HEAD
-            <DebounceInput
-            minLength={3}
-            debounceTimeout={300}
-            placeholder="Search for people"
-            onChange={(e) => setValue(e.target.value)}
-            onKeyDown={(e) => InputController(e)}
-=======
         <DebounceInput
         onClick ={inputClick}
         minLength={3}
@@ -47,9 +29,8 @@ export default function Search({setLogout,logout}){
 
         />
         <AiOutlineSearch  className="searchIcon"/>
->>>>>>> main
 
-            />
+      
             <AiOutlineSearch  className="searchIcon"/>
             {
                 search ?(
