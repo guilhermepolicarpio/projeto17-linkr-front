@@ -1,13 +1,20 @@
 import styled from "styled-components";
 import Header from "../layouts/Header";
 import Post from "../layouts/Post";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import Swal from "sweetalert2";
 import userContext from "../context/UserContext";
+import { publishPost, fetchPosts } from "../service/API";
 
 export default function Home() {
-  const { userInfo, setUserInfo } = useContext(userContext);
-  
+  const { userInfos, setUserInfos } = useContext(userContext);
+  const [loading, setLoading] = useState(true);
+  const [inputState, setInputState] = useState(false);
+  const [form, setForm] = useState({
+    url: "",
+    description: "",
+  });
+
   checkLogin();
 
   async function getLocal() {
@@ -15,19 +22,56 @@ export default function Home() {
     return user;
   }
 
-  function checkLogin() {
-    if (userInfo === "" && getLocal()) {
-      setUserInfo(getLocal());
-    } else if (getLocal() === undefined || getLocal() === null){
+  async function checkLogin() {
+    if (
+      (userInfos === "" && (await getLocal())) ||
+      (userInfos === undefined && getLocal())
+    ) {
+      setUserInfos(await getLocal());
+    } else if (getLocal() === undefined || getLocal() === null) {
       Swal.fire({
         title: "Ops!",
         text: "You are not logged in.",
-        icon: 'error',
-        confirmButtonText: 'Go to login page'
-    }).then(function() {
+        icon: "error",
+        confirmButtonText: "Go to login page",
+      }).then(function () {
         window.location = "/";
-    });
+      });
     }
+  }
+
+  const userPic = userInfos.pictureUrl;
+
+  function handleForm(e) {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value,
+    });
+  }
+
+  function publishRequest(e) {
+    e.preventDefault();
+    setInputState(true);
+    setLoading(false);
+
+    publishPost(form)
+      .then((res) => {
+        fetchPosts();
+      })
+      .catch((error) => {
+        console.log(error);
+        Swal.fire({
+          icon: "error",
+          title: "Ops...",
+          text: `${error.response.data}`,
+        });
+        setInputState(false);
+        setLoading(true);
+        setForm({
+          url: "",
+          description: "",
+        });
+      });
   }
 
   return (
@@ -38,14 +82,32 @@ export default function Home() {
           <h1>timeline</h1>
           <Create>
             <div>
-              <img src="https://www.dictionary.com/e/wp-content/uploads/2018/03/chibi.jpg" alt="user avatar" />
+              <img src={userPic} alt="user avatar" />
             </div>
-            <div>
+            <form onSubmit={publishRequest}>
               <h3>What are you going to share today?</h3>
-              <input type="url" placeholder="http://..."></input>
-              <textarea placeholder="Awesome article about #javascript"></textarea>
-              <button>Publish</button>
-            </div>
+              <input
+                required="true"
+                name="url"
+                value={form.url}
+                type="url"
+                placeholder="http://..."
+                onChange={handleForm}
+                disabled={inputState}
+              ></input>
+              <textarea
+                name="description"
+                value={form.description}
+                placeholder="Awesome article about #javascript"
+                onChange={handleForm}
+                disabled={inputState}
+              ></textarea>
+              {loading ? (
+                <button type="submit">Publish</button>
+              ) : (
+                <button disabled={inputState}>Publishing...</button>
+              )}
+            </form>
           </Create>
           <Post />
           <Post />
@@ -87,7 +149,7 @@ const Wrapper = styled.div`
 
   @media only screen and (max-width: 600px) {
     & > div:nth-child(2) {
-        width: 100%;
+      width: 100%;
     }
   }
 `;
@@ -203,7 +265,7 @@ const Create = styled.div`
     min-width: 60px;
   }
 
-  div:nth-child(2) {
+  form {
     display: flex;
     flex-direction: column;
     justify-content: center;
