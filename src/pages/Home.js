@@ -11,7 +11,7 @@ export default function Home() {
           <h1>timeline</h1>
           <Create>
             <div>
-              <img src="https://www.dictionary.com/e/wp-content/uploads/2018/03/chibi.jpg"/>
+              <img src="https://www.dictionary.com/e/wp-content/uploads/2018/03/chibi.jpg" alt="user avatar" />
             </div>
             <div>
               <h3>What are you going to share today?</h3>
@@ -217,7 +217,7 @@ const Sidebar = styled.div`
   height: fit-content;
   align-items: flex-start;
   justify-content: flex-start;
-  margin-top: 90px;
+  margin-top: 120px;
   background-color: #000000;
   color: #ffffff;
   border-radius: 15px;
