@@ -11,6 +11,7 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const [inputState, setInputState] = useState(false);
   const [form, setForm] = useState({
+    userId: "",
     url: "",
     description: "",
   });
@@ -68,6 +69,7 @@ export default function Home() {
         setInputState(false);
         setLoading(true);
         setForm({
+          userId: "",
           url: "",
           description: "",
         });
