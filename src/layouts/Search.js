@@ -6,23 +6,51 @@ import {AiOutlineSearch} from "react-icons/ai"
 export default function Search(){
 
     const [value,setValue] = useState([])
-    const [search,SetSearch] = useState(false)
+    const [search,SetSearch] = useState(true)
 
     console.log(value)
 
+    function InputController(e){
+        if(e.keyCode === 27){
+            SetSearch(false)
+        }
+    }
+
+    console.log(search)
     // Fazer comunicação com servidor para efetuar as buscas
     return (
 
         <SearchContainer>
-        <DebounceInput
-        minLength={3}
-        debounceTimeout={300}
-        placeholder="Search for people"
-        onChange={(e) => setValue(e.target.value)}
+            <DebounceInput
+            minLength={3}
+            debounceTimeout={300}
+            placeholder="Search for people"
+            onChange={(e) => setValue(e.target.value)}
+            onKeyDown={(e) => InputController(e)}
 
-        />
-        <AiOutlineSearch  className="searchIcon"/>
-
+            />
+            <AiOutlineSearch  className="searchIcon"/>
+            {
+                search ?(
+                    <>
+                <SearchBoxResults>
+                    <>
+                    Guilherme 
+                    </>
+                 </SearchBoxResults>
+                 <SearchBoxResults>
+                    <>
+                    Guilherme 
+                    </>
+                 </SearchBoxResults>
+                 </>
+                )
+                :
+                (
+                    <>              
+                    </>
+                )
+            }
        
 
         </SearchContainer>
@@ -37,6 +65,7 @@ const SearchContainer = styled.div`
     position: relative;
     width: 50%;
     height: 100%;
+    z-index: 1;
 
     input{
         position: relative;
@@ -58,4 +87,14 @@ const SearchContainer = styled.div`
         z-index: 1;
         color:#C6C6C6;
     }
+`
+const SearchBoxResults = styled.div`
+
+    width: 100%;
+    height: auto;
+    position: absolute;
+    background: #E7E7E7;
+    border-radius: 8px;
+    top: 60px;
+
 `
