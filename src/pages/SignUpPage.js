@@ -45,7 +45,7 @@ export default function SignUpPage() {
           })
         );
         setUserInfos(res.data);
-        navigate("/home");
+        navigate("/");
       })
       .catch((error) => {
         Swal.fire({
