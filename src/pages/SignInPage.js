@@ -40,7 +40,7 @@ export default function SignInPage() {
           })
         );
         setUserInfos(res.data);
-        navigate("/");
+        navigate("/home");
       })
       .catch((error) => {
         console.log(error);
