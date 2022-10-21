@@ -35,6 +35,7 @@ export default function SignInPage() {
           "linkr",
           JSON.stringify({
             id: res.data.id,
+            name: res.data.name,
             token: res.data.token,
             pictureUrl: res.data.pictureUrl,
           })
