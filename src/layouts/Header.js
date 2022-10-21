@@ -46,7 +46,7 @@ export default function Header(){
                     </LogOutBox>
                     </>
                 }
-                <img src={userProfilePicture.userPicture} alt ="userProfilePicture"/>
+                <img src={userProfilePicture.pictureUrl} alt ="userProfilePicture"/>
             </UserMenu>            
         </HeaderContainer>
     )
