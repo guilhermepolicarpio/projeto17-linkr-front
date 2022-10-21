@@ -49,7 +49,7 @@ export default function SignUpPage() {
           })
         );
         setUserInfos(res.data);
-        navigate("/");
+        navigate("/home");
       })
       .catch((error) => {
         Swal.fire({
