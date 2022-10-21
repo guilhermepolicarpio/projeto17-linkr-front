@@ -1,8 +1,11 @@
 import styled from "styled-components";
 import Header from "../layouts/Header";
 import Post from "../layouts/Post";
+import userContext from "../context/UserContext";
+import { useContext } from "react";
 
 export default function Home() {
+  
   return (
     <Wrapper>
       <Header />
