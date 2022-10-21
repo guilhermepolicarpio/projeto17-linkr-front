@@ -1,14 +1,25 @@
-import styled from "styled-components"
-import { DebounceInput } from "react-debounce-input"
-import { useState } from "react"
-import {AiOutlineSearch} from "react-icons/ai"
+import styled from "styled-components";
+import { DebounceInput } from "react-debounce-input";
+import { useState } from "react";
+import {AiOutlineSearch} from "react-icons/ai";
 
-export default function Search(){
+export default function Search({setLogout,logout}){
 
+<<<<<<< HEAD
     const [value,setValue] = useState([])
     const [search,SetSearch] = useState(true)
+=======
+    const [value,setValue] = useState([]);
+    const [search,SetSearch] = useState(false);
+>>>>>>> main
 
-    console.log(value)
+    console.log(value);
+
+    function inputClick(){
+        if(logout === false){
+            setLogout(true);
+        };    
+    }
 
     function InputController(e){
         if(e.keyCode === 27){
@@ -21,12 +32,24 @@ export default function Search(){
     return (
 
         <SearchContainer>
+<<<<<<< HEAD
             <DebounceInput
             minLength={3}
             debounceTimeout={300}
             placeholder="Search for people"
             onChange={(e) => setValue(e.target.value)}
             onKeyDown={(e) => InputController(e)}
+=======
+        <DebounceInput
+        onClick ={inputClick}
+        minLength={3}
+        debounceTimeout={300}
+        placeholder="Search for people"
+        onChange={(e) => setValue(e.target.value)}
+
+        />
+        <AiOutlineSearch  className="searchIcon"/>
+>>>>>>> main
 
             />
             <AiOutlineSearch  className="searchIcon"/>
