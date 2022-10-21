@@ -34,7 +34,7 @@ export default function SignInPage() {
         localStorage.setItem(
           "linkr",
           JSON.stringify({
-            name: res.data.name,
+            id: res.data.id,
             token: res.data.token,
             pictureUrl: res.data.pictureUrl,
           })
