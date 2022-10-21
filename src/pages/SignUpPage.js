@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { InputsBox, LinkToSignUpPage, Logo, LogoBox, PageContainer, TagLine } from '../styles/signIn&signUpStyle'
-import {ThreeDots} from 'react-loader-spinner'
-import Swal from 'sweetalert2'
-import { useNavigate } from "react-router-dom";
+import {ThreeDots} from 'react-loader-spinner';
+import Swal from 'sweetalert2';
+import { Link, useNavigate } from "react-router-dom";
 import { postSignUp } from "../service/API";
+import styled from "styled-components";
 
 export default function SignUpPage(){
    
@@ -38,6 +38,7 @@ export default function SignUpPage(){
             })
             navigate('/');
         }).catch((error)=>{
+            console.log(error);
             Swal.fire({
                 icon: 'error',
                 title: 'Ops...',
@@ -75,3 +76,100 @@ export default function SignUpPage(){
         </PageContainer>
     )
 }
+
+const PageContainer = styled.div`
+min-height: 100vh;
+display: flex;
+justify-content: space-between;
+    @media screen and (max-width: 600px){
+        display: block;
+    }
+`
+const LogoBox = styled.div`
+width: 100%;
+background: #151515;
+box-shadow: 4px 0px 4px rgba(0, 0, 0, 0.25);
+display: flex;
+flex-direction: column;
+justify-content: center;
+padding:70px;
+`
+const Logo= styled.div`
+font-family: Passion One;
+font-style: normal;
+font-weight: 700;
+font-size: 106px;
+line-height: 117px;
+letter-spacing: 0.05em;
+color: #FFFFFF;
+`
+
+const TagLine=styled.div`
+font-family: Oswald;
+font-style: normal;
+font-weight: 700;
+font-size: 43px;
+line-height: 64px;
+color: #FFFFFF;
+`
+const InputsBox= styled.form`
+width: 70%;
+background-color: #333333;
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+padding: 30px;
+
+@media screen and (max-width: 600px){
+        width: 100%;
+        margin-top: 10%;
+    }
+
+input{
+    width: 100%;
+    height: 65px;
+    background: #FFFFFF;
+    border-radius: 6px;
+    margin-bottom: 5px;
+    font-family: Oswald;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 27px;
+    line-height: 40px;
+    color: #9F9F9F;
+    border: none;
+    padding-left: 10px;
+}
+
+button{
+    width: 100%;
+    height: 65px;
+    background: #1877F2;
+    border-radius: 6px;
+    font-family: Oswald;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 27px;
+    line-height: 40px;
+    color: #FFFFFF;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+`
+const LinkToSignUpPage = styled(Link)`
+font-family: Lato;
+font-style: normal;
+font-weight: 400;
+font-size: 20px;
+line-height: 24px;
+text-decoration-line: underline;
+color: #FFFFFF;
+margin-top: 5px;
+width: 100%;
+display: flex;
+justify-content: center;
+align-items: center;
+`

@@ -1,24 +1,39 @@
 import styled from "styled-components"
 import { VscChevronDown,VscChevronUp } from "react-icons/vsc";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Search from "./Search";
 import { useState } from "react";
 
+
 export default function Header(){
 
-    const [logout, setLogout] = useState(true)
+    const [logout, setLogout] = useState(true);
+    const navigate = useNavigate();
+ 
+    const userProfilePicture = JSON.parse(localStorage.getItem('linkr'));
     
     function logoutUser(){
-        console.log("usuario deslogado")
+        console.log("usuario deslogado");
+        localStorage.removeItem('linkr');
+        navigate("/login");
+    }
+    function logoClick(){
+        if(logout === false){
+            setLogout(true);
+        };
+        navigate('/');          
     }
 
-    console.log(logout)
+    console.log(logout);
 
     return(
 
         <HeaderContainer>
-            <h1 /*onClick ={() => Navigate('/home')}*/>linkr</h1>
-            <Search/>
+            <h1 onClick ={logoClick}>linkr</h1>
+            <Search
+            setLogout={setLogout}
+            logout={logout}
+            />
             <UserMenu toggle={logout}>
                 {
                     logout ?
@@ -31,9 +46,8 @@ export default function Header(){
                     </LogOutBox>
                     </>
                 }
-                <img src = "https://s2.glbimg.com/13jIhS8n-xVsR7vxPAJSdXUu2Z8=/480x543/middle/smart/i.s3.glbimg.com/v1/AUTH_e84042ef78cb4708aeebdf1c68c6cbd6/internal_photos/bs/2022/u/9/YZS2J1TMGNDnaxKkOkSA/rindo-de-nervoso.png" alt ="provisoria"/>
-            </UserMenu>
-            
+                <img src={userProfilePicture.userPicture} alt ="userProfilePicture"/>
+            </UserMenu>            
         </HeaderContainer>
     )
 }

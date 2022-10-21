@@ -8,7 +8,7 @@ const URL_BASE = 'http://localhost:5000'
 }
 
 function postLogin(body){
-    const signIn = `${URL_BASE}/`;
+    const signIn = `${URL_BASE}/login`;
     return axios.post(signIn,body);
 }
 

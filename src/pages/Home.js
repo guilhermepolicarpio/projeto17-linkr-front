@@ -11,7 +11,7 @@ export default function Home() {
           <h1>timeline</h1>
           <Create>
             <div>
-              <img src="https://www.dictionary.com/e/wp-content/uploads/2018/03/chibi.jpg" />
+              <img src="https://www.dictionary.com/e/wp-content/uploads/2018/03/chibi.jpg"/>
             </div>
             <div>
               <h3>What are you going to share today?</h3>

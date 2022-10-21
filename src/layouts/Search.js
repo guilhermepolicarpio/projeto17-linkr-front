@@ -1,20 +1,27 @@
-import styled from "styled-components"
-import { DebounceInput } from "react-debounce-input"
-import { useState } from "react"
-import {AiOutlineSearch} from "react-icons/ai"
+import styled from "styled-components";
+import { DebounceInput } from "react-debounce-input";
+import { useState } from "react";
+import {AiOutlineSearch} from "react-icons/ai";
 
-export default function Search(){
+export default function Search({setLogout,logout}){
 
-    const [value,setValue] = useState([])
-    const [search,SetSearch] = useState(false)
+    const [value,setValue] = useState([]);
+    const [search,SetSearch] = useState(false);
 
-    console.log(value)
+    console.log(value);
+
+    function inputClick(){
+        if(logout === false){
+            setLogout(true);
+        };    
+    }
 
     // Fazer comunicação com servidor para efetuar as buscas
     return (
 
         <SearchContainer>
         <DebounceInput
+        onClick ={inputClick}
         minLength={3}
         debounceTimeout={300}
         placeholder="Search for people"
