@@ -13,8 +13,6 @@ export default function Search({setLogout,logout}){
     const [search,SetSearch] = useState(false);
 >>>>>>> main
 
-    console.log(value);
-
     function inputClick(){
         if(logout === false){
             setLogout(true);

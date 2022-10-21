@@ -1,8 +1,35 @@
 import styled from "styled-components";
 import Header from "../layouts/Header";
 import Post from "../layouts/Post";
+import { useContext } from "react";
+import Swal from "sweetalert2";
+import userContext from "../context/UserContext";
 
 export default function Home() {
+  const { userInfo, setUserInfo } = useContext(userContext);
+  
+  checkLogin();
+
+  async function getLocal() {
+    const user = await JSON.parse(localStorage.getItem("linkr"));
+    return user;
+  }
+
+  function checkLogin() {
+    if (userInfo === "" && getLocal()) {
+      setUserInfo(getLocal());
+    } else if (getLocal() === undefined || getLocal() === null){
+      Swal.fire({
+        title: "Ops!",
+        text: "You are not logged in.",
+        icon: 'error',
+        confirmButtonText: 'Go to login page'
+    }).then(function() {
+        window.location = "/";
+    });
+    }
+  }
+
   return (
     <Wrapper>
       <Header />
