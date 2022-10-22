@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { DebounceInput } from "react-debounce-input";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {AiOutlineSearch} from "react-icons/ai";
 import { searchUsers } from "../service/API";
 import userContext from "../context/UserContext";
@@ -39,10 +39,8 @@ export default function Search({setLogout,logout}){
         />
         <AiOutlineSearch  className="searchIcon"/>
             {
-                search.length >2 ?
-               
+                !search.length >0?
                     ""
-              
                 :
                 <SearchBoxResults>{
                     search.map((result) => (
@@ -107,16 +105,17 @@ const SearchBoxResults = styled.div`
  
 
     img{
-        height: 53px;
-        width:53px;
+        height: 42px;
+        width: 42px;
         border-radius: 26.5px;
+        margin: 12px;
     }
 
     p{
         font-family: 'Lato';
     font-style: normal;
     font-weight: 400;
-    font-size: 19px;
+    font-size: 22px;
     line-height: 23px;
     display: flex;
     align-items: center;
