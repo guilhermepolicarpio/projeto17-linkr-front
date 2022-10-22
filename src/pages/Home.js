@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Header from "../layouts/Header";
 import Post from "../layouts/Post";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import userContext from "../context/UserContext";
 import { publishPost, fetchPosts } from "../service/API";
@@ -10,26 +10,15 @@ export default function Home() {
   const { userInfos, setUserInfos } = useContext(userContext);
   const [loading, setLoading] = useState(true);
   const [inputState, setInputState] = useState(false);
-  const [form, setForm] = useState({
-    userId: "",
-    url: "",
-    description: "",
-  });
+  const [list, setList] = useState([]);
 
   checkLogin();
 
-  async function getLocal() {
-    const user = await JSON.parse(localStorage.getItem("linkr"));
-    return user;
-  }
-
-  async function checkLogin() {
-    if (
-      (userInfos === "" && (await getLocal())) ||
-      (userInfos === undefined && getLocal())
-    ) {
-      setUserInfos(await getLocal());
-    } else if (getLocal() === undefined || getLocal() === null) {
+  function checkLogin() {
+    const user = JSON.parse(localStorage.getItem("linkr"));
+    if ((userInfos === "" && user) || (userInfos === undefined && user)) {
+      setUserInfos(user);
+    } else if (user === undefined || user === null) {
       Swal.fire({
         title: "Ops!",
         text: "You are not logged in.",
@@ -41,12 +30,27 @@ export default function Home() {
     }
   }
 
-  const userPic = userInfos.pictureUrl;
+  const config = {
+    headers: {
+      Authorization: `Bearer ${userInfos.token}`,
+    },
+  };
+
+  useEffect(() => {
+     setList(fetchPosts(config));
+  }, []);
+
+  const [form, setForm] = useState({
+    url: "",
+    description: "",
+    userId: "",
+  });
 
   function handleForm(e) {
     setForm({
       ...form,
       [e.target.name]: e.target.value,
+      userId: userInfos.id,
     });
   }
 
@@ -55,9 +59,9 @@ export default function Home() {
     setInputState(true);
     setLoading(false);
 
-    publishPost(form)
+    publishPost(form, config)
       .then((res) => {
-        fetchPosts();
+        setList(fetchPosts(config));
       })
       .catch((error) => {
         console.log(error);
@@ -69,12 +73,14 @@ export default function Home() {
         setInputState(false);
         setLoading(true);
         setForm({
-          userId: "",
           url: "",
           description: "",
+          userId: userInfos.id,
         });
       });
   }
+
+  console.log(list, config)
 
   return (
     <Wrapper>
@@ -84,12 +90,12 @@ export default function Home() {
           <h1>timeline</h1>
           <Create>
             <div>
-              <img src={userPic} alt="user avatar" />
+              <img src={userInfos.pictureUrl} alt="user avatar" />
             </div>
             <form onSubmit={publishRequest}>
               <h3>What are you going to share today?</h3>
               <input
-                required="true"
+                required
                 name="url"
                 value={form.url}
                 type="url"
@@ -111,9 +117,16 @@ export default function Home() {
               )}
             </form>
           </Create>
-          <Post />
-          <Post />
-          <Post />
+          {list.map((item, index) => (
+            <Post
+              key={index}
+              id={item.id}
+              url={item.url}
+              description={item.description}
+              userName={item.userName}
+              userPic={item.userPic}
+            />
+          ))}
         </Feed>
         <Sidebar>
           <h1>trending</h1>

@@ -12,14 +12,14 @@ function postLogin(body) {
   return axios.post(signIn, body);
 }
 
-function publishPost(body) {
+function publishPost(body, headers) {
   const publish = `${URL_BASE}/posts`;
-  return axios.post(publish, body);
+  return axios.post(publish, body, headers);
 }
 
-function fetchPosts() {
+function fetchPosts(headers) {
     const getPosts = `${URL_BASE}/posts`;
-    return axios.get(getPosts);
+    return axios.get(getPosts, headers);
   }
 
 export { postSignUp, postLogin, publishPost, fetchPosts };
