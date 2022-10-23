@@ -26,7 +26,7 @@ const navigate = useNavigate();
   function logoutUser() {
     console.log("usuario deslogado");
     localStorage.removeItem("linkr");
-    navigate("/login");
+    navigate("/");
   }
   function logoClick() {
     if (logout === false) {
@@ -122,7 +122,7 @@ const LogOutBox = styled.div`
   right: 0;
   top: 72px;
   z-index: 1;
-
   align-items: center;
   justify-content: center;
+  transition: all 10s;
 `;

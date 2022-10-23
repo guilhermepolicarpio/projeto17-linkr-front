@@ -16,6 +16,7 @@ const rootHtml = document.querySelector(".root");
 export default function App() {
   const [userInfos, setUserInfos] = useState("");
 
+  console.log(userInfos)
   return (
     <>
       <GlobalStyle />

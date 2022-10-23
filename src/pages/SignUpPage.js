@@ -35,11 +35,6 @@ export default function SignUpPage() {
 
     postSignUp(form)
       .then((res) => {
-        Swal.fire({
-          icon: "success",
-          title: "Sucess!",
-          text: "user registered successfully",
-        });
         localStorage.setItem(
           "linkr",
           JSON.stringify({
@@ -50,7 +45,7 @@ export default function SignUpPage() {
           })
         );
         setUserInfos(res.data);
-        navigate("/home");
+        navigate("/");
       })
       .catch((error) => {
         Swal.fire({
