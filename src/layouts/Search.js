@@ -4,7 +4,6 @@ import { useState } from "react";
 import {AiOutlineSearch} from "react-icons/ai";
 import { searchUsers } from "../service/API";
 
-
 export default function Search({setLogout,logout}){
 
     const [search,SetSearch] = useState([])
@@ -49,15 +48,9 @@ export default function Search({setLogout,logout}){
                     
                 ))}
                 </SearchBoxResults>
-        
-               
-                
             }
-       
-
         </SearchContainer>
-    )
-}
+    )}
 
 const SearchContainer = styled.div`
 
@@ -100,17 +93,15 @@ const SearchBoxResults = styled.div`
     top: 60px;
     margin-bottom: 10px;
     
- 
-
     img{
-        height: 42px;
-        width: 42px;
-        border-radius: 26.5px;
-        margin: 12px;
+    height: 42px;
+    width: 42px;
+    border-radius: 26.5px;
+    margin: 12px;
     }
 
     p{
-        font-family: 'Lato';
+    font-family: 'Lato';
     font-style: normal;
     font-weight: 400;
     font-size: 22px;
@@ -118,12 +109,8 @@ const SearchBoxResults = styled.div`
     display: flex;
     align-items: center;
     margin: 10px;
-
-
-
-color: #515151;
+    color: #515151;
     }
-
 `
 const RowResult = styled.div`
     display: flex;
