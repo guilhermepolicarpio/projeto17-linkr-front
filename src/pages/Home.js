@@ -14,11 +14,16 @@ export default function Home() {
 
   checkLogin();
 
-  function checkLogin() {
+  function getLocal() {
     const user = JSON.parse(localStorage.getItem("linkr"));
-    if ((userInfos === "" && user) || (userInfos === undefined && user)) {
-      setUserInfos(user);
-    } else if (user === undefined || user === null) {
+    return user;
+  }
+
+  function checkLogin() {
+    console.log("executei userdata");
+    if (userInfos === "" && getLocal()) {
+      setUserInfos(getLocal());
+    } else if (!userInfos) {
       Swal.fire({
         title: "Ops!",
         text: "You are not logged in.",
@@ -37,8 +42,20 @@ export default function Home() {
   };
 
   useEffect(() => {
-     setList(fetchPosts(config));
+    getPosts();
   }, []);
+
+  function getPosts() {
+      console.log("executei getposts");
+      console.log(userInfos.token);
+      const promise = fetchPosts(config);
+      promise
+        .then((answer) => {
+          console.log(answer);
+          setList(answer);
+        })
+        .catch((error) => console.log(error));
+  }
 
   const [form, setForm] = useState({
     url: "",
@@ -79,8 +96,6 @@ export default function Home() {
         });
       });
   }
-
-  console.log(list, config)
 
   return (
     <Wrapper>
