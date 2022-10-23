@@ -1,16 +1,15 @@
 import styled from "styled-components";
 
-export default function Post() {
+export default function Post({ id, url, description, userName, userPic }) {
+
   return (
     <Wrapper>
       <div>
-        <img src="https://www.dictionary.com/e/wp-content/uploads/2018/03/chibi.jpg" />
+        <img src={userPic} alt="user_picture" />
       </div>
       <div>
-        <h3>Fulano de Tal</h3>
-        <h4>
-          Muito maneiro esse tutorial de Material UI com React, deem uma olhada!
-        </h4>
+        <h3>{userName}</h3>
+        <h4>{description}</h4>
         <Metadata>
           <div>
             <h2>Como aplicar o Material UI em um projeto React</h2>
@@ -19,10 +18,10 @@ export default function Post() {
               new location. Sorry about making you click through to another
               page.
             </h4>
-            <p>https://medium.com/@pshrmn/a-simple-react-router</p>
+            <p>{url}</p>
           </div>
           <div>
-            <img src="https://images.genius.com/267629b35cc1e6d6b8acd6532a638bd7.700x700x1.jpg" />
+            <img src="https://images.genius.com/267629b35cc1e6d6b8acd6532a638bd7.700x700x1.jpg" alt="url_image_preview"/>
           </div>
         </Metadata>
       </div>
