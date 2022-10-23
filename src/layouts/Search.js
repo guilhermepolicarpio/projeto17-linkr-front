@@ -1,13 +1,12 @@
 import styled from "styled-components";
 import { DebounceInput } from "react-debounce-input";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {AiOutlineSearch} from "react-icons/ai";
 import { searchUsers } from "../service/API";
-import userContext from "../context/UserContext";
+
 
 export default function Search({setLogout,logout}){
 
-    const [value,setValue] = useState([])
     const [search,SetSearch] = useState([])
 
     function inputClick(){
@@ -17,8 +16,7 @@ export default function Search({setLogout,logout}){
     }
 
     function searchUser(value){
-        console.log("teste")
-
+        
         searchUsers(value)
             .then((res) =>{
                 console.log(res)
@@ -45,7 +43,7 @@ export default function Search({setLogout,logout}){
                 <SearchBoxResults>{
                     search.map((result) => (
                     <RowResult>
-                        <img src = {result.pictureUrl}/>
+                        <img src = {result.pictureUrl} alt=""/>
                         <p>{result.name}</p>
                     </RowResult>
                     
