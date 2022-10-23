@@ -1,12 +1,14 @@
 import styled from "styled-components";
 import { DebounceInput } from "react-debounce-input";
-import { useState } from "react";
+import { useState,useContext } from "react";
 import {AiOutlineSearch} from "react-icons/ai";
 import { searchUsers } from "../service/API";
+import userContext from "../context/UserContext";
 
 export default function Search({setLogout,logout}){
 
     const [search,SetSearch] = useState([])
+    const { userInfos, setUserInfos } = useContext(userContext);
 
     function inputClick(){
         if(logout === false){
@@ -15,10 +17,18 @@ export default function Search({setLogout,logout}){
     }
 
     function searchUser(value){
+
+        if(value.length===0)
+            return;
         
-        searchUsers(value)
+        const config = {
+            headers: {
+              Authorization: `Bearer ${userInfos.token}`,
+            },
+          }
+
+        searchUsers(value,config)
             .then((res) =>{
-                console.log(res)
                 SetSearch(res.data)
             })
     }
