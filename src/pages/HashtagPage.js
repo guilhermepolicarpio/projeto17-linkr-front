@@ -13,30 +13,30 @@ export default function HashtagPage() {
     const [list, setList] = useState([]);
     const {hashtag} = useParams();
 
-    checkLogin();
+    // checkLogin();
 
-    function getLocal() {
-        const user = JSON.parse(localStorage.getItem("linkr"));
-        return user;
-      }
+    // function getLocal() {
+    //     const user = JSON.parse(localStorage.getItem("linkr"));
+    //     return user;
+    //   }
 
-      function checkLogin() {
-        console.log('exec checkLogin')
-        if (userInfos === "" && getLocal()) {
-          setUserInfos(getLocal());
-          console.log('busquei do localStorage e coloquei no UserInfos')
-          console.log('userInfos = ' + userInfos)
-        } else if (!userInfos) {
-          Swal.fire({
-            title: "Ops!",
-            text: "You are not logged in.",
-            icon: "error",
-            confirmButtonText: "Go to login page",
-          }).then(function () {
-            window.location = "/";
-          });
-        }
-      }
+    //   function checkLogin() {
+    //     console.log('exec checkLogin')
+    //     if (userInfos === "" && getLocal()) {
+    //       setUserInfos(getLocal());
+    //       console.log('busquei do localStorage e coloquei no UserInfos')
+    //       console.log('userInfos = ' + userInfos)
+    //     } else if (!userInfos) {
+    //       Swal.fire({
+    //         title: "Ops!",
+    //         text: "You are not logged in.",
+    //         icon: "error",
+    //         confirmButtonText: "Go to login page",
+    //       }).then(function () {
+    //         window.location = "/";
+    //       });
+    //     }
+    //   }
 
       useEffect(() => {
         getHashtagPosts(hashtag);

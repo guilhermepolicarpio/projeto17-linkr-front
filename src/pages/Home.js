@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 import userContext from "../context/UserContext";
 import { publishPost, fetchPosts } from "../service/API";
 import postsContext from "../context/postsContext";
+import Trending from "../layouts/Trending";
 
 export default function Home() {
   const { userInfos, setUserInfos } = useContext(userContext);
@@ -142,16 +143,7 @@ export default function Home() {
             />
           ))}
         </Feed>
-        <Sidebar>
-          <h1>trending</h1>
-          <hr />
-          <div>
-            <p>#javascript</p>
-            <p>#react</p>
-            <p>#nodejs</p>
-            <p>#python</p>
-          </div>
-        </Sidebar>
+        <Trending />
       </div>
     </Wrapper>
   );

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export default function Post({ id, url, description, userName, userPic }) {
+export default function Post({ id, url, description, userName, userPic, metaTitle, image, metaDescription }) {
 
   return (
     <Wrapper>
@@ -12,16 +12,14 @@ export default function Post({ id, url, description, userName, userPic }) {
         <h4>{description}</h4>
         <Metadata>
           <div>
-            <h2>Como aplicar o Material UI em um projeto React</h2>
+            <h2>{metaTitle}</h2>
             <h4>
-              Hey! I have moved this tutorial to my personal blog. Same content,
-              new location. Sorry about making you click through to another
-              page.
+              {metaDescription}
             </h4>
             <p>{url}</p>
           </div>
           <div>
-            <img src="https://images.genius.com/267629b35cc1e6d6b8acd6532a638bd7.700x700x1.jpg" alt="url_image_preview"/>
+            <img src={image} alt="url_image_preview"/>
           </div>
         </Metadata>
       </div>

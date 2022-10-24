@@ -23,6 +23,12 @@ export default function Trending() {
         return;
     }
 
+    const tagStyle = {
+      color: 'white',
+      fontWeight: 500,
+      cursor: 'pointer'
+    };
+
     return (
         <Sidebar>
         <h1>trending</h1>
@@ -31,7 +37,7 @@ export default function Trending() {
           {hashtags.map((hashtag,index) => {
             hashtag = `#${hashtag}`;
             return (
-                <ReactTagify tagClicked={chooseHashtag}>
+                <ReactTagify tagClicked={chooseHashtag} tagStyle={tagStyle}>
                     <p key={index}>
                         {hashtag}
                     </p>
