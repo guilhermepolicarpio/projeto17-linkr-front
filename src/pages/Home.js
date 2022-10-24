@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 import userContext from "../context/UserContext";
 import { publishPost, fetchPosts } from "../service/API";
 import postsContext from "../context/postsContext";
+import { ThreeDots } from "react-loader-spinner";
 
 export default function Home() {
   const { userInfos, setUserInfos } = useContext(userContext);
@@ -14,44 +15,17 @@ export default function Home() {
   const [inputState, setInputState] = useState(false);
   
 
- /* checkLogin();
-
-  function getLocal() {
-    const user = JSON.parse(localStorage.getItem("linkr"));
-    return user;
-  }
-
-  function checkLogin() {
-    console.log('exec checkLogin')
-    if (userInfos === "" && getLocal()) {
-      setUserInfos(getLocal());
-      console.log('busquei do localStorage e coloquei no UserInfos')
-      console.log('userInfos = ' + userInfos);
-      console.log(userInfos);
-    } else if (!userInfos) {
-      Swal.fire({
-        title: "Ops!",
-        text: "You are not logged in.",
-        icon: "error",
-        confirmButtonText: "Go to login page",
-      }).then(function () {
-        window.location = "/";
-      });
-    }
-  }*/
-
   useEffect(() => {
+    setLoading(false)
     fetchPosts().then((answer) => {
       setList(answer.data);
+      setLoading(true);
     })
     .catch((error) => console.log(error));
-    
     if(userInfos === ""){
       setUserInfos(JSON.parse(localStorage.getItem("linkr")));
     }
   }, []);
-
-
 
   const [form, setForm] = useState({
     url: "",
@@ -128,19 +102,28 @@ export default function Home() {
               )}
             </form>
           </Create>
-          {list.map((item, index) => (
-            <Post
-              key={index}
-              id={item.id}
-              url={item.url}
-              description={item.description}
-              userName={item.userName}
-              userPic={item.userPic}
-              metaTitle={item.metaTitle}
-              image={item.image}
-              metaDescription={item.metaDescription}
-            />
-          ))}
+          {loading? 
+                    <Posts>
+                    {list.map((item, index) => (
+                      <Post
+                        key={index}
+                        id={item.id}
+                        url={item.url}
+                        description={item.description}
+                        userName={item.userName}
+                        userPic={item.userPic}
+                        metaTitle={item.metaTitle}
+                        image={item.image}
+                        metaDescription={item.metaDescription}
+                      />
+                    ))}
+                    </Posts>
+                    :
+                    <Posts>
+                      <ThreeDots color="#FFFFFF"/>
+                    </Posts>         
+        }
+
         </Feed>
         <Sidebar>
           <h1>trending</h1>
@@ -157,6 +140,14 @@ export default function Home() {
   );
 }
 
+const Posts = styled.div`
+width: 100%;
+min-height: 50px;
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+`
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
