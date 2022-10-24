@@ -10,6 +10,7 @@ import GlobalStyle from "./styles/globalStyles";
 import SignUpPage from "./pages/SignUpPage";
 import SignInPage from "./pages/SignInPage";
 import userContext from "./context/UserContext";
+import UserPage from "./pages/UserPage";
 
 const rootHtml = document.querySelector(".root");
 
@@ -25,6 +26,7 @@ export default function App() {
             <Route path="/" element={<SignInPage />} />
             <Route path="/home" element={<Home />} />
             <Route path="/signUp" element={<SignUpPage />} />
+            <Route path="/user/:id" element={<UserPage />} />
           </Routes>
         </BrowserRouter>
       </userContext.Provider>
