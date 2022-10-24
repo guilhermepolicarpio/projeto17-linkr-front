@@ -2,13 +2,14 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { ReactTagify } from "react-tagify";
+import { fetchTrendings } from "../service/API";
 
 export default function Trending() {
     const [hashtags, setHashtags] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
-        const promise = getTrendings(); //services;
+        const promise = fetchTrendings();
         
         promise.then((hash) => {
             const {data} = hash;

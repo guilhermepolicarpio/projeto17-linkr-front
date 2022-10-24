@@ -11,6 +11,7 @@ import SignUpPage from "./pages/SignUpPage";
 import SignInPage from "./pages/SignInPage";
 import userContext from "./context/UserContext";
 import UserPage from "./pages/UserPage";
+import HashtagPage from "./pages/HashtagPage";
 
 const rootHtml = document.querySelector(".root");
 
@@ -27,6 +28,7 @@ export default function App() {
             <Route path="/home" element={<Home />} />
             <Route path="/signUp" element={<SignUpPage />} />
             <Route path="/user/:id" element={<UserPage />} />
+            <Route path="/hashtags/:hashtag" element={<HashtagPage />} />
           </Routes>
         </BrowserRouter>
       </userContext.Provider>
