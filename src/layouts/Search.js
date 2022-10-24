@@ -4,11 +4,13 @@ import { useState,useContext } from "react";
 import {AiOutlineSearch} from "react-icons/ai";
 import { searchUsers } from "../service/API";
 import userContext from "../context/UserContext";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 
 export default function Search({setLogout,logout}){
 
     const [search,SetSearch] = useState([])
     const { userInfos, setUserInfos } = useContext(userContext);
+    const navigate = useNavigate();
 
     function inputClick(){
         if(logout === false){
@@ -33,6 +35,11 @@ export default function Search({setLogout,logout}){
             })
     }
 
+    function userPage(id){
+        console.log(id)
+        navigate(`/user/${id}`)
+    }
+
     return (
 
         <SearchContainer>
@@ -47,14 +54,16 @@ export default function Search({setLogout,logout}){
         <AiOutlineSearch  className="searchIcon"/>
             {
                 !search.length >0?
-                    ""
+                ""
                 :
                 <SearchBoxResults>{
                     search.map((result) => (
-                    <RowResult>
+                    
+                    <RowResult onClick={() => userPage(result.id)}>
                         <img src = {result.pictureUrl} alt=""/>
                         <p>{result.name}</p>
                     </RowResult>
+                
                     
                 ))}
                 </SearchBoxResults>
@@ -68,7 +77,7 @@ const SearchContainer = styled.div`
     justify-content: center;
     align-items: center;
     position: relative;
-    width: 50%;
+    width: 60%;
     height: 100%;
     z-index: 1;
 
@@ -124,4 +133,5 @@ const SearchBoxResults = styled.div`
 `
 const RowResult = styled.div`
     display: flex;
+    cursor: pointer;
 `

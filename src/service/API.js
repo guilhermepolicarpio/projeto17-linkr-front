@@ -22,9 +22,13 @@ function fetchPosts(headers) {
     return axios.get(getPosts, headers);
   }
 
-function searchUsers(user,headers){;
+function searchUsers(user,headers){
   const searchUser = `${URL_BASE}/search/${user}`;
   return axios.get(searchUser,headers)
 }
 
-export { postSignUp, postLogin, publishPost, fetchPosts, searchUsers };
+function getUser(id, headers){
+  const getUsers = `${URL_BASE}/users/${id}`;
+  return axios.get(getUsers,headers)
+}
+export { postSignUp, postLogin, publishPost, fetchPosts, searchUsers,getUser };
