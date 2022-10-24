@@ -132,16 +132,7 @@ export default function Home() {
               )}
             </form>
           </Create>
-          {list.map((item, index) => (
-            <Post
-              key={index}
-              id={item.id}
-              url={item.url}
-              description={item.description}
-              userName={item.userName}
-              userPic={item.userPic}
-            />
-          ))}
+    
         </Feed>
         <Sidebar>
           <h1>trending</h1>
