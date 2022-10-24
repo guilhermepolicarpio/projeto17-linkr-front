@@ -20,9 +20,11 @@ export default function Home() {
   }
 
   function checkLogin() {
-    console.log("executei userdata");
+    console.log('exec checkLogin')
     if (userInfos === "" && getLocal()) {
       setUserInfos(getLocal());
+      console.log('busquei do localStorage e coloquei no UserInfos')
+      console.log('userInfos = ' + userInfos)
     } else if (!userInfos) {
       Swal.fire({
         title: "Ops!",
@@ -46,12 +48,11 @@ export default function Home() {
   }, []);
 
   function getPosts() {
-      console.log("executei getposts");
-      console.log(userInfos.token);
+    console.log('executei getPosts')
+    console.log('token =' + userInfos.token)
       const promise = fetchPosts(config);
       promise
         .then((answer) => {
-          console.log(answer);
           setList(answer);
         })
         .catch((error) => console.log(error));
@@ -132,7 +133,19 @@ export default function Home() {
               )}
             </form>
           </Create>
-    
+          {list.map((item, index) => (
+            <Post
+              key={index}
+              id={item.id}
+              url={item.url}
+              description={item.description}
+              userName={item.userName}
+              userPic={item.userPic}
+              metaTitle={item.metaTitle}
+              image={item.image}
+              metaDescription={item.metaDescription}
+            />
+          ))}
         </Feed>
         <Sidebar>
           <h1>trending</h1>
