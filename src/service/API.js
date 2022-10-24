@@ -32,9 +32,23 @@ function fetchPosts() {
     return axios.get(getPosts,createHeaders());
   }
 
-function searchUsers(user){;
+function searchUsers(user,headers){
   const searchUser = `${URL_BASE}/search/${user}`;
-  return axios.get(searchUser)
+  return axios.get(searchUser,headers)
 }
 
-export { postSignUp, postLogin, publishPost, fetchPosts, searchUsers };
+function getUser(id, headers){
+  const getUsers = `${URL_BASE}/users/${id}`;
+  return axios.get(getUsers,headers)
+}
+
+function fetchHashtagPosts(hashtag) {
+  const getPosts = `${URL_BASE}/hashtags/${hashtag}`
+  return axios.get(getPosts);
+}
+
+function fetchTrendings() {
+  const getTrendings = `${URL_BASE}/hashtags/`
+  return axios.get(getTrendings);
+}
+export { postSignUp, postLogin, publishPost, fetchPosts, searchUsers,getUser, fetchHashtagPosts, fetchTrendings };
