@@ -41,4 +41,14 @@ function getUser(id, headers){
   const getUsers = `${URL_BASE}/users/${id}`;
   return axios.get(getUsers,headers)
 }
-export { postSignUp, postLogin, publishPost, fetchPosts, searchUsers,getUser };
+
+function fetchHashtagPosts(hashtag) {
+  const getPosts = `${URL_BASE}/hashtags/${hashtag}`
+  return axios.get(getPosts);
+}
+
+function fetchTrendings() {
+  const getTrendings = `${URL_BASE}/hashtags/`
+  return axios.get(getTrendings);
+}
+export { postSignUp, postLogin, publishPost, fetchPosts, searchUsers,getUser, fetchHashtagPosts, fetchTrendings };
