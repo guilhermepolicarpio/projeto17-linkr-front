@@ -1,14 +1,16 @@
 import styled from "styled-components";
 import { DebounceInput } from "react-debounce-input";
-import { useEffect, useState } from "react";
+import { useState,useContext } from "react";
 import {AiOutlineSearch} from "react-icons/ai";
 import { searchUsers } from "../service/API";
 import userContext from "../context/UserContext";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 
 export default function Search({setLogout,logout}){
 
-    const [value,setValue] = useState([])
     const [search,SetSearch] = useState([])
+    const { userInfos, setUserInfos } = useContext(userContext);
+    const navigate = useNavigate();
 
     function inputClick(){
         if(logout === false){
@@ -17,13 +19,25 @@ export default function Search({setLogout,logout}){
     }
 
     function searchUser(value){
-        console.log("teste")
 
-        searchUsers(value)
+        if(value.length===0)
+            return;
+        
+        const config = {
+            headers: {
+              Authorization: `Bearer ${userInfos.token}`,
+            },
+          }
+
+        searchUsers(value,config)
             .then((res) =>{
-                console.log(res)
                 SetSearch(res.data)
             })
+    }
+
+    function userPage(id){
+        console.log(id)
+        navigate(`/user/${id}`)
     }
 
     return (
@@ -40,26 +54,22 @@ export default function Search({setLogout,logout}){
         <AiOutlineSearch  className="searchIcon"/>
             {
                 !search.length >0?
-                    ""
+                ""
                 :
                 <SearchBoxResults>{
                     search.map((result) => (
-                    <RowResult>
-                        <img src = {result.pictureUrl}/>
+                    
+                    <RowResult onClick={() => userPage(result.id)}>
+                        <img src = {result.pictureUrl} alt=""/>
                         <p>{result.name}</p>
                     </RowResult>
+                
                     
                 ))}
                 </SearchBoxResults>
-        
-               
-                
             }
-       
-
         </SearchContainer>
-    )
-}
+    )}
 
 const SearchContainer = styled.div`
 
@@ -67,7 +77,7 @@ const SearchContainer = styled.div`
     justify-content: center;
     align-items: center;
     position: relative;
-    width: 50%;
+    width: 60%;
     height: 100%;
     z-index: 1;
 
@@ -102,17 +112,15 @@ const SearchBoxResults = styled.div`
     top: 60px;
     margin-bottom: 10px;
     
- 
-
     img{
-        height: 42px;
-        width: 42px;
-        border-radius: 26.5px;
-        margin: 12px;
+    height: 42px;
+    width: 42px;
+    border-radius: 26.5px;
+    margin: 12px;
     }
 
     p{
-        font-family: 'Lato';
+    font-family: 'Lato';
     font-style: normal;
     font-weight: 400;
     font-size: 22px;
@@ -120,13 +128,10 @@ const SearchBoxResults = styled.div`
     display: flex;
     align-items: center;
     margin: 10px;
-
-
-
-color: #515151;
+    color: #515151;
     }
-
 `
 const RowResult = styled.div`
     display: flex;
+    cursor: pointer;
 `
