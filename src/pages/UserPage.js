@@ -10,12 +10,6 @@ export default function UserPage(){
     const { id} = useParams();
     const [user, setUser] = useState({})
     const { userInfos } = useContext(userContext);
-    const [load, SetLoad] = useState(false)
-
-    async function getData(data){
-        await setUser(data)
-
-    }
 
     useEffect(() =>{
     const config = {
