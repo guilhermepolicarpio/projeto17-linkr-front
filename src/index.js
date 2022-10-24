@@ -10,23 +10,28 @@ import GlobalStyle from "./styles/globalStyles";
 import SignUpPage from "./pages/SignUpPage";
 import SignInPage from "./pages/SignInPage";
 import userContext from "./context/UserContext";
+import postsContext from "./context/postsContext";
 
 const rootHtml = document.querySelector(".root");
 
 export default function App() {
+  
   const [userInfos, setUserInfos] = useState("");
+  const [list, setList] = useState([]);
 
   return (
     <>
       <GlobalStyle />
       <userContext.Provider value={{ userInfos, setUserInfos }}>
+        <postsContext.Provider value={{list, setList}}>
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<SignInPage />} />
+            <Route path="/" element={<SignInPage />}/>
             <Route path="/home" element={<Home />} />
-            <Route path="/signUp" element={<SignUpPage />} />
+            <Route path="/signUp" element={<SignUpPage/>} />
           </Routes>
         </BrowserRouter>
+        </postsContext.Provider>
       </userContext.Provider>
     </>
   );

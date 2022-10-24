@@ -5,14 +5,16 @@ import { useContext, useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import userContext from "../context/UserContext";
 import { publishPost, fetchPosts } from "../service/API";
+import postsContext from "../context/postsContext";
 
 export default function Home() {
   const { userInfos, setUserInfos } = useContext(userContext);
+  const {list,setList} = useContext(postsContext);
   const [loading, setLoading] = useState(true);
   const [inputState, setInputState] = useState(false);
-  const [list, setList] = useState([]);
+  
 
-  checkLogin();
+ /* checkLogin();
 
   function getLocal() {
     const user = JSON.parse(localStorage.getItem("linkr"));
@@ -24,7 +26,8 @@ export default function Home() {
     if (userInfos === "" && getLocal()) {
       setUserInfos(getLocal());
       console.log('busquei do localStorage e coloquei no UserInfos')
-      console.log('userInfos = ' + userInfos)
+      console.log('userInfos = ' + userInfos);
+      console.log(userInfos);
     } else if (!userInfos) {
       Swal.fire({
         title: "Ops!",
@@ -35,28 +38,20 @@ export default function Home() {
         window.location = "/";
       });
     }
-  }
-
-  const config = {
-    headers: {
-      Authorization: `Bearer ${userInfos.token}`,
-    },
-  };
+  }*/
 
   useEffect(() => {
-    getPosts();
+    fetchPosts().then((answer) => {
+      setList(answer.data);
+    })
+    .catch((error) => console.log(error));
+    
+    if(userInfos === ""){
+      setUserInfos(JSON.parse(localStorage.getItem("linkr")));
+    }
   }, []);
 
-  function getPosts() {
-    console.log('executei getPosts')
-    console.log('token =' + userInfos.token)
-      const promise = fetchPosts(config);
-      promise
-        .then((answer) => {
-          setList(answer);
-        })
-        .catch((error) => console.log(error));
-  }
+
 
   const [form, setForm] = useState({
     url: "",
@@ -77,9 +72,9 @@ export default function Home() {
     setInputState(true);
     setLoading(false);
 
-    publishPost(form, config)
+    publishPost(form)
       .then((res) => {
-        setList(fetchPosts(config));
+        setList(fetchPosts());
       })
       .catch((error) => {
         console.log(error);
