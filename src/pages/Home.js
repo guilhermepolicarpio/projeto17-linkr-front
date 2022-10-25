@@ -11,19 +11,19 @@ import { ThreeDots } from "react-loader-spinner";
 
 export default function Home() {
   const { userInfos, setUserInfos } = useContext(userContext);
-  const {list,setList} = useContext(postsContext);
+  const { list, setList } = useContext(postsContext);
   const [loading, setLoading] = useState(true);
   const [inputState, setInputState] = useState(false);
-  
 
   useEffect(() => {
-    setLoading(false)
-    fetchPosts().then((answer) => {
-      setList(answer.data);
-      setLoading(true);
-    })
-    .catch((error) => console.log(error));
-    if(userInfos === ""){
+    setLoading(false);
+    fetchPosts()
+      .then((answer) => {
+        setList(answer.data);
+        setLoading(true);
+      })
+      .catch((error) => console.log(error));
+    if (userInfos === "") {
       setUserInfos(JSON.parse(localStorage.getItem("linkr")));
     }
   }, []);
@@ -58,7 +58,7 @@ export default function Home() {
             description: "",
             userId: userInfos.id,
           });
-        })
+        });
       })
       .catch((error) => {
         console.log(error);
@@ -112,28 +112,34 @@ export default function Home() {
               )}
             </form>
           </Create>
-          {loading? 
-                    <Posts>
-                    {list.length !== 0 ? list.map((item, index) => (
-                      <Post
-                        key={index}
-                        id={item.id}
-                        url={item.url}
-                        description={item.description}
-                        userName={item.userName}
-                        userPic={item.userPic}
-                        metaTitle={item.metaTitle}
-                        image={item.image}
-                        metaDescription={item.metaDescription}
-                      />
-                    )) : <h3>An error occured while trying to fetch the posts, please refresh the page</h3>}
-                    </Posts>
-                    :
-                    <Posts>
-                      <ThreeDots color="#FFFFFF"/>
-                    </Posts>         
-        }
-
+          {loading ? (
+            <Posts>
+              {list.length !== 0 ? (
+                list.map((item, index) => (
+                  <Post
+                    key={index}
+                    id={item.id}
+                    url={item.url}
+                    description={item.description}
+                    userName={item.userName}
+                    userPic={item.userPic}
+                    metaTitle={item.metaTitle}
+                    image={item.image}
+                    metaDescription={item.metaDescription}
+                  />
+                ))
+              ) : (
+                <h3>
+                  An error occured while trying to fetch the posts, please
+                  refresh the page
+                </h3>
+              )}
+            </Posts>
+          ) : (
+            <Posts>
+              <ThreeDots color="#FFFFFF" />
+            </Posts>
+          )}
         </Feed>
         <Trending />
       </div>
@@ -142,13 +148,13 @@ export default function Home() {
 }
 
 const Posts = styled.div`
-width: 100%;
-min-height: 50px;
-display: flex;
-flex-direction: column;
-justify-content: center;
-align-items: center;
-`
+  width: 100%;
+  min-height: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;

@@ -7,6 +7,7 @@ function createHeaders() {
   const config = {
     headers: {
       Authorization: `Bearer ${auth.token}`,
+      userId: auth.id
     },
   };
   return config;
@@ -24,12 +25,12 @@ function postLogin(body) {
 
 function publishPost(body) {
   const publish = `${URL_BASE}/posts`;
-  return axios.post(publish, body,createHeaders());
+  return axios.post(publish, body, createHeaders());
 }
 
 function fetchPosts() {
     const getPosts = `${URL_BASE}/posts`;
-    return axios.get(getPosts,createHeaders());
+    return axios.get(getPosts, createHeaders());
   }
 
 function searchUsers(user,headers){
