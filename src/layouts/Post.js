@@ -10,7 +10,7 @@ export default function Post({ id, url, description, userName, userPic, metaTitl
       <div>
         <h3>{userName}</h3>
         <h4>{description}</h4>
-        <Metadata>
+        <Metadata onClick={() => window.open(url, '_blank')} >
           <div>
             <h2>{metaTitle}</h2>
             <h4>
@@ -94,7 +94,11 @@ const Metadata = styled.div`
   height: 200px;
   border: 1px solid grey;
   border-radius: 5px;
-  overflow: auto;
+  overflow: hidden;
+
+  &:hover {
+    cursor: pointer;
+  }
 
   div:nth-child(1) {
     display: flex;
