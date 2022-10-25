@@ -114,7 +114,7 @@ export default function Home() {
           </Create>
           {loading ? (
             <Posts>
-              {list.length !== 0 ? (
+              {typeof list !== "string" ? (
                 list.map((item, index) => (
                   <Post
                     key={index}
@@ -130,8 +130,7 @@ export default function Home() {
                 ))
               ) : (
                 <h3>
-                  An error occured while trying to fetch the posts, please
-                  refresh the page
+                  {list === "zero_following" ? "You don't follow anyone yet. Go search for new friends!🔎" : "No posts found from your friends 😔"}
                 </h3>
               )}
             </Posts>
@@ -154,6 +153,14 @@ const Posts = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  h3 {
+    font-family: "Lato", sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    align-self: flex-start;
+    color: #FFFFFF;
+  }
 `;
 const Wrapper = styled.div`
   display: flex;
