@@ -52,6 +52,12 @@ export default function Home() {
         fetchPosts().then((answer) => {
           setList(answer.data);
           setLoading(true);
+          setInputState(false);
+          setForm({
+            url: "",
+            description: "",
+            userId: userInfos.id,
+          });
         })
       })
       .catch((error) => {
@@ -108,7 +114,7 @@ export default function Home() {
           </Create>
           {loading? 
                     <Posts>
-                    {list.map((item, index) => (
+                    {list.length !== 0 ? list.map((item, index) => (
                       <Post
                         key={index}
                         id={item.id}
@@ -120,7 +126,7 @@ export default function Home() {
                         image={item.image}
                         metaDescription={item.metaDescription}
                       />
-                    ))}
+                    )) : <h3>An error occured while trying to fetch the posts, please refresh the page</h3>}
                     </Posts>
                     :
                     <Posts>
