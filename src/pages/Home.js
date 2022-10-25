@@ -49,7 +49,10 @@ export default function Home() {
 
     publishPost(form)
       .then((res) => {
-        setList(fetchPosts());
+        fetchPosts().then((answer) => {
+          setList(answer.data);
+          setLoading(true);
+        })
       })
       .catch((error) => {
         console.log(error);
