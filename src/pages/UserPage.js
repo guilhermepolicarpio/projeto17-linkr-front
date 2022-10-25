@@ -5,11 +5,14 @@ import { useContext, useEffect, useState} from "react";
 import { useParams } from "react-router-dom";
 import { getUser } from "../service/API";
 
+
 export default function UserPage(){
 
     const { id} = useParams();
-    const [user, setUser] = useState({})
+    const [user, setUser] = useState([])
+    const [loading, setLoading] = useState(true);
     const { userInfos } = useContext(userContext);
+
 
     useEffect(() =>{
     const config = {
@@ -17,14 +20,13 @@ export default function UserPage(){
             Authorization: `Bearer ${userInfos.token}`,
         },
     }
-    
+    setLoading(false);
       getUser(id,config).then((res) =>{
-        console.log("oi")
-        setUser(res.data.rows[0])
-        console.log(user)
+        setUser(res.data)
+        setLoading(true);
+        console.log(user);
     })
-    }, [id]
-    )
+    }, []);
 
 
     return(
@@ -33,8 +35,14 @@ export default function UserPage(){
              <div>
              <Feed>
                 <UserTittle>
-                    <img src = {user.pictureUrl} alt=""/>
-                    <h1>{user.name}</h1>
+                {loading 
+                ? 
+                <h1>carregado</h1>
+                :
+                <>
+                <h1>carregando</h1>
+                </>
+                  }
                  </UserTittle>
              </Feed>
              </div>

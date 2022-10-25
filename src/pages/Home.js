@@ -20,6 +20,7 @@ export default function Home() {
     setLoading(false)
     fetchPosts().then((answer) => {
       setList(answer.data);
+      console.log(list)
       setLoading(true);
     })
     .catch((error) => console.log(error));
