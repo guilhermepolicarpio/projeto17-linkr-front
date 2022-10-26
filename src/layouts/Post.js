@@ -1,6 +1,24 @@
 import styled from "styled-components";
+import { ReactTagify } from "react-tagify";
+import { useNavigate } from "react-router-dom";
 
 export default function Post({ id, url, description, userName, userPic, metaTitle, image, metaDescription }) {
+
+  const navigate = useNavigate();
+
+  function chooseHashtag(hash) {
+    let hashtag = hash.split("#")[1];
+    navigate(`/hashtags/${hashtag}`);
+    return;
+  }
+
+
+  const tagStyle = {
+      fontWeight: 700,
+      cursor: 'pointer'
+  };
+
+
 
   return (
     <Wrapper>
@@ -9,7 +27,9 @@ export default function Post({ id, url, description, userName, userPic, metaTitl
       </div>
       <div>
         <h3>{userName}</h3>
+        <ReactTagify tagClicked={chooseHashtag} tagStyle={tagStyle}>
         <h4>{description}</h4>
+        </ReactTagify>
         <Metadata onClick={() => window.open(url, '_blank')} >
           <div>
             <h2>{metaTitle}</h2>
