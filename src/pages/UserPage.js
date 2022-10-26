@@ -4,12 +4,18 @@ import userContext from "../context/UserContext";
 import { useContext, useEffect, useState} from "react";
 import { useParams } from "react-router-dom";
 import { getUser } from "../service/API";
+import Post from "../layouts/Post";
+import { ThreeDots } from "react-loader-spinner";
+import Trending from "../layouts/Trending";
 
 export default function UserPage(){
 
     const { id} = useParams();
-    const [user, setUser] = useState({})
+    const [user, setUser] = useState([])
+    const [loading, setLoading] = useState(true);
     const { userInfos } = useContext(userContext);
+    const [userNameTittle, setUserNameTittle] = useState([]);
+    const [userNamePicture, setUserNamePicture] = useState([]);
 
     useEffect(() =>{
     const config = {
@@ -17,26 +23,51 @@ export default function UserPage(){
             Authorization: `Bearer ${userInfos.token}`,
         },
     }
-    
+    setLoading(false);
       getUser(id,config).then((res) =>{
-        console.log("oi")
-        setUser(res.data.rows[0])
-        console.log(user)
-    })
-    }, [id]
-    )
+        setUser(res.data)
+        setUserNameTittle(res.data[0].name)
+        setUserNamePicture(res.data[0].pictureUrl)
+        setLoading(true);
+       
 
+    })
+    }, [id]);
 
     return(
         <Wrapper>
              <Header/>
              <div>
              <Feed>
+                {loading 
+                ? <>
                 <UserTittle>
-                    <img src = {user.pictureUrl} alt=""/>
-                    <h1>{user.name}</h1>
+                <img src={userNamePicture} alt="user avatar" />
+                 <h1> {userNameTittle}' posts</h1>
                  </UserTittle>
+                <Posts>
+                  {user.map((item, index) => (
+                      <Post
+                        key={index}
+                        id={item.id}
+                        url={item.url}
+                        description={item.description}
+                        userName={item.userName}
+                        userPic={item.pictureUrl}
+                        metaTitle={item.metaTitle}
+                        image={item.image}
+                        metaDescription={item.metaDescription}
+                      />
+                    ))}
+                </Posts>
+                </>
+                :
+                <Posts>
+                <ThreeDots color="#FFFFFF"/>
+              </Posts> 
+                  }
              </Feed>
+             <Trending />
              </div>
         </Wrapper>
     )
@@ -57,7 +88,7 @@ const Wrapper = styled.div`
     height: fit-content;
     align-items: flex-start;
     justify-content: flex-start;
-    padding-top: 160px;
+    padding-top:160px;
     column-gap: 25px;
   }
 
@@ -113,9 +144,18 @@ const UserTittle = styled.div`
   }
 
   img{
-    width: 50px;
-    height: 50px;
-    border-radius: 26.5px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
   }
   
 `;
+
+const Posts = styled.div`
+width: 100%;
+min-height: 50px;
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+`
