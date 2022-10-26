@@ -11,20 +11,19 @@ import { ThreeDots } from "react-loader-spinner";
 
 export default function Home() {
   const { userInfos, setUserInfos } = useContext(userContext);
-  const {list,setList} = useContext(postsContext);
+  const { list, setList } = useContext(postsContext);
   const [loading, setLoading] = useState(true);
   const [inputState, setInputState] = useState(false);
-  
 
   useEffect(() => {
-    setLoading(false)
-    fetchPosts().then((answer) => {
-      setList(answer.data);
-      console.log(list)
-      setLoading(true);
-    })
-    .catch((error) => console.log(error));
-    if(userInfos === ""){
+    setLoading(false);
+    fetchPosts()
+      .then((answer) => {
+        setList(answer.data);
+        setLoading(true);
+      })
+      .catch((error) => console.log(error));
+    if (userInfos === "") {
       setUserInfos(JSON.parse(localStorage.getItem("linkr")));
     }
   }, []);
@@ -50,7 +49,16 @@ export default function Home() {
 
     publishPost(form)
       .then((res) => {
-        setList(fetchPosts());
+        fetchPosts().then((answer) => {
+          setList(answer.data);
+          setLoading(true);
+          setInputState(false);
+          setForm({
+            url: "",
+            description: "",
+            userId: userInfos.id,
+          });
+        });
       })
       .catch((error) => {
         console.log(error);
@@ -104,28 +112,33 @@ export default function Home() {
               )}
             </form>
           </Create>
-          {loading? 
-                    <Posts>
-                    {list.map((item, index) => (
-                      <Post
-                        key={index}
-                        id={item.id}
-                        url={item.url}
-                        description={item.description}
-                        userName={item.userName}
-                        userPic={item.userPic}
-                        metaTitle={item.metaTitle}
-                        image={item.image}
-                        metaDescription={item.metaDescription}
-                      />
-                    ))}
-                    </Posts>
-                    :
-                    <Posts>
-                      <ThreeDots color="#FFFFFF"/>
-                    </Posts>         
-        }
-
+          {loading ? (
+            <Posts>
+              {typeof list !== "string" ? (
+                list.map((item, index) => (
+                  <Post
+                    key={index}
+                    id={item.id}
+                    url={item.url}
+                    description={item.description}
+                    userName={item.userName}
+                    userPic={item.userPic}
+                    metaTitle={item.metaTitle}
+                    image={item.image}
+                    metaDescription={item.metaDescription}
+                  />
+                ))
+              ) : (
+                <h3>
+                  {list === "zero_following" ? "You don't follow anyone yet. Go search for new friends!🔎" : "No posts found from your friends 😔"}
+                </h3>
+              )}
+            </Posts>
+          ) : (
+            <Posts>
+              <ThreeDots color="#FFFFFF" />
+            </Posts>
+          )}
         </Feed>
         <Trending />
       </div>
@@ -134,13 +147,21 @@ export default function Home() {
 }
 
 const Posts = styled.div`
-width: 100%;
-min-height: 50px;
-display: flex;
-flex-direction: column;
-justify-content: center;
-align-items: center;
-`
+  width: 100%;
+  min-height: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  h3 {
+    font-family: "Lato", sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    align-self: flex-start;
+    color: #FFFFFF;
+  }
+`;
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
