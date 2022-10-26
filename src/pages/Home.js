@@ -8,25 +8,47 @@ import { publishPost, fetchPosts } from "../service/API";
 import postsContext from "../context/postsContext";
 import Trending from "../layouts/Trending";
 import { ThreeDots } from "react-loader-spinner";
+import useInterval from "use-interval";
 
 export default function Home() {
+  
   const { userInfos, setUserInfos } = useContext(userContext);
   const { list, setList } = useContext(postsContext);
   const [loading, setLoading] = useState(true);
   const [inputState, setInputState] = useState(false);
+  const[updated,setUpdated]= useState(false);
+ const [number, setNumber] = useState(0);
 
   useEffect(() => {
     setLoading(false);
     fetchPosts()
       .then((answer) => {
-        setList(answer.data);
+        const postsList = answer.data;
+        setList(postsList.reverse());
         setLoading(true);
+        setNumber(answer.data.length);
       })
       .catch((error) => console.log(error));
     if (userInfos === "") {
       setUserInfos(JSON.parse(localStorage.getItem("linkr")));
     }
   }, []);
+
+  useInterval(()=>{
+    
+    console.log(updated);
+    console.log(number);
+    
+    fetchPosts().then((answer)=>{
+      const postsList = answer.data;
+      console.log(postsList.length);
+      if(postsList.length !== number){
+        setUpdated(true);
+        setList(postsList.reverse());
+      } 
+    })
+    .catch((error) => console.log(error));
+  },1800);
 
   const [form, setForm] = useState({
     url: "",
@@ -112,6 +134,7 @@ export default function Home() {
               )}
             </form>
           </Create>
+          {updated ? <UpdatePostsButton onClick={()=> setUpdated(false)}> `${number} new posts, load more!`</UpdatePostsButton> : " " }
           {loading ? (
             <Posts>
               {typeof list !== "string" ? (
@@ -332,3 +355,13 @@ const Create = styled.div`
     }
   }
 `;
+
+const UpdatePostsButton = styled.button`
+width: 611px;
+height: 61px;
+left: 241px;
+top: 481px;
+background: #1877F2;
+box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+border-radius: 16px;
+`

@@ -32,7 +32,7 @@ const navigate = useNavigate();
     if (logout === false) {
       setLogout(true);
     }
-    navigate("/");
+    navigate("/home");
   }
 
   return (

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const URL_BASE = "http://localhost:5000";
+const URL_BASE = "https://grupo2-linkr.herokuapp.com/";
 
 function createHeaders() {
   const auth = JSON.parse(localStorage.getItem("linkr"));
@@ -38,9 +38,9 @@ function searchUsers(user,headers){
   return axios.get(searchUser,headers)
 }
 
-function getUser(id, headers){
+function getUser(id){
   const getUsers = `${URL_BASE}/users/${id}`;
-  return axios.get(getUsers,headers)
+  return axios.get(getUsers,createHeaders());
 }
 
 function fetchHashtagPosts(hashtag) {

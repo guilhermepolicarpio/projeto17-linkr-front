@@ -10,7 +10,7 @@ export default function Post({ id, url, description, userName, userPic, metaTitl
       <div>
         <h3>{userName}</h3>
         <h4>{description}</h4>
-        <Metadata onClick={() => window.open(url, '_blank')} >
+        <Metadata onClick={() => window.open(url, '_blank')}>
           <div>
             <h2>{metaTitle}</h2>
             <h4>
