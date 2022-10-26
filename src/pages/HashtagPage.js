@@ -40,7 +40,7 @@ export default function HashtagPage() {
 
       useEffect(() => {
         getHashtagPosts(hashtag);
-      }, []);
+      }, [hashtag]);
 
       function getHashtagPosts(hash) {
         const promise = fetchHashtagPosts(hash);
@@ -56,7 +56,7 @@ export default function HashtagPage() {
           <Header />
           <div>
             <Feed>
-              <h1>timeline</h1>
+              <h1>{hashtag}</h1>
               {list.map((item, index) => (
                 <Post
                   key={index}
