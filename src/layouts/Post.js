@@ -1,4 +1,9 @@
 import styled from "styled-components";
+import {CgTrashEmpty as Trash} from "react-icons/cg";
+import { FiHeart as Heart } from "react-icons/fi";
+import { GrEdit as Edit } from "react-icons/gr";
+import { BiComment as Comment } from "react-icons/bi";
+import { BiRepost as Repost } from "react-icons/bi";
 import { ReactTagify } from "react-tagify";
 import { useNavigate } from "react-router-dom";
 
