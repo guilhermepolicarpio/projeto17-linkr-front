@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 import { getUser } from "../service/API";
 import Post from "../layouts/Post";
 import { ThreeDots } from "react-loader-spinner";
+import Trending from "../layouts/Trending";
 
 export default function UserPage(){
 
@@ -14,6 +15,7 @@ export default function UserPage(){
     const [loading, setLoading] = useState(true);
     const { userInfos } = useContext(userContext);
     const [userNameTittle, setUserNameTittle] = useState([]);
+    const [userNamePicture, setUserNamePicture] = useState([]);
 
     useEffect(() =>{
     const config = {
@@ -25,6 +27,7 @@ export default function UserPage(){
       getUser(id,config).then((res) =>{
         setUser(res.data)
         setUserNameTittle(res.data[0].name)
+        setUserNamePicture(res.data[0].pictureUrl)
         setLoading(true);
        
 
@@ -39,7 +42,8 @@ export default function UserPage(){
                 {loading 
                 ? <>
                 <UserTittle>
-                 <h1> {userNameTittle}</h1>
+                <img src={userNamePicture} alt="user avatar" />
+                 <h1> {userNameTittle}' posts</h1>
                  </UserTittle>
                 <Posts>
                   {user.map((item, index) => (
@@ -63,6 +67,7 @@ export default function UserPage(){
               </Posts> 
                   }
              </Feed>
+             <Trending />
              </div>
         </Wrapper>
     )
@@ -139,9 +144,9 @@ const UserTittle = styled.div`
   }
 
   img{
-    width: 50px;
-    height: 50px;
-    border-radius: 26.5px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
   }
   
 `;
