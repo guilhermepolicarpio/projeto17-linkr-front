@@ -1,4 +1,9 @@
 import styled from "styled-components";
+import {CgTrashEmpty as Trash} from "react-icons/cg";
+import { FiHeart as Heart } from "react-icons/fi";
+import { GrEdit as Edit } from "react-icons/gr";
+import { BiComment as Comment } from "react-icons/bi";
+import { BiRepost as Repost } from "react-icons/bi";
 
 export default function Post({ id, url, description, userName, userPic, metaTitle, image, metaDescription }) {
 
