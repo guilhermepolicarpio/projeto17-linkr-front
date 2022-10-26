@@ -4,7 +4,8 @@ import userContext from "../context/UserContext";
 import { useContext, useEffect, useState} from "react";
 import { useParams } from "react-router-dom";
 import { getUser } from "../service/API";
-
+import Post from "../layouts/Post";
+import { ThreeDots } from "react-loader-spinner";
 
 export default function UserPage(){
 
@@ -12,7 +13,7 @@ export default function UserPage(){
     const [user, setUser] = useState([])
     const [loading, setLoading] = useState(true);
     const { userInfos } = useContext(userContext);
-
+    const [userNameTittle, setUserNameTittle] = useState([]);
 
     useEffect(() =>{
     const config = {
@@ -23,27 +24,44 @@ export default function UserPage(){
     setLoading(false);
       getUser(id,config).then((res) =>{
         setUser(res.data)
+        setUserNameTittle(res.data[0].name)
         setLoading(true);
-        console.log(user);
-    })
-    }, []);
+       
 
+    })
+    }, [id]);
 
     return(
         <Wrapper>
              <Header/>
              <div>
              <Feed>
-                <UserTittle>
                 {loading 
-                ? 
-                <h1>carregado</h1>
-                :
-                <>
-                <h1>carregando</h1>
-                </>
-                  }
+                ? <>
+                <UserTittle>
+                 <h1> {userNameTittle}</h1>
                  </UserTittle>
+                <Posts>
+                  {user.map((item, index) => (
+                      <Post
+                        key={index}
+                        id={item.id}
+                        url={item.url}
+                        description={item.description}
+                        userName={item.userName}
+                        userPic={item.pictureUrl}
+                        metaTitle={item.metaTitle}
+                        image={item.image}
+                        metaDescription={item.metaDescription}
+                      />
+                    ))}
+                </Posts>
+                </>
+                :
+                <Posts>
+                <ThreeDots color="#FFFFFF"/>
+              </Posts> 
+                  }
              </Feed>
              </div>
         </Wrapper>
@@ -65,7 +83,7 @@ const Wrapper = styled.div`
     height: fit-content;
     align-items: flex-start;
     justify-content: flex-start;
-    padding-top: 160px;
+    padding-top:160px;
     column-gap: 25px;
   }
 
@@ -127,3 +145,12 @@ const UserTittle = styled.div`
   }
   
 `;
+
+const Posts = styled.div`
+width: 100%;
+min-height: 50px;
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+`
