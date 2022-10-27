@@ -18,15 +18,16 @@ export default function Home() {
   const [inputState, setInputState] = useState(false);
   const[updated,setUpdated]= useState(false);
  const [number, setNumber] = useState(0);
+ const [updatedPosts,setUpdatedPosts]= useState([]);
 
   useEffect(() => {
     setLoading(false);
     fetchPosts()
       .then((answer) => {
-        const postsList = answer.data;
-        setList(postsList.reverse());
+        setList(answer.data);
         setLoading(true);
         setNumber(answer.data.length);
+        setUpdated(false);
       })
       .catch((error) => console.log(error));
     if (userInfos === "") {
@@ -35,20 +36,27 @@ export default function Home() {
   }, []);
 
   useInterval(()=>{
+    newPosts();
+  },1800);
+
+  function newPosts(){
+    console.log('new')
+    
+    fetchPosts()
+    .then((answer)=>{
+      setUpdatedPosts(answer.data.length);
+    })
+    .catch((error) => console.log(error));
     
     console.log(updated);
     console.log(number);
-    
-    fetchPosts().then((answer)=>{
-      const postsList = answer.data;
-      console.log(postsList.length);
-      if(postsList.length !== number){
+    console.log(updatedPosts);
+
+        if( updatedPosts !== number  && typeof(updatedPosts) === 'number' ){      
+          console.log('passando');  
         setUpdated(true);
-        setList(postsList.reverse());
       } 
-    })
-    .catch((error) => console.log(error));
-  },1800);
+  }
 
   const [form, setForm] = useState({
     url: "",
@@ -364,4 +372,5 @@ top: 481px;
 background: #1877F2;
 box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 border-radius: 16px;
+border: none;
 `
