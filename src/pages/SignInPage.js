@@ -41,6 +41,7 @@ export default function SignInPage() {
           })
         );
         setUserInfos(res.data);
+        console.log()
         navigate("/home");
       })
       .catch((error) => {
