@@ -37,8 +37,8 @@ export default function Trending() {
           {hashtags.map((hashtag,index) => {
             hashtag = `#${hashtag}`;
             return (
-                <ReactTagify tagClicked={chooseHashtag} tagStyle={tagStyle}>
-                    <p key={index}>
+                <ReactTagify key={index} tagClicked={chooseHashtag} tagStyle={tagStyle}>
+                    <p>
                         {hashtag}
                     </p>
                 </ReactTagify>
