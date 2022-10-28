@@ -99,6 +99,7 @@ const Wrapper = styled.div`
     justify-content: flex-start;
     align-items: center;
     width: 15%;
+    min-width: 107px;
   }
   & > div:nth-child(1) > span {
     font-family: "Lato", sans-serif;
@@ -160,6 +161,7 @@ const Metadata = styled.div`
     justify-content: space-between;
     align-items: center;
     width: auto;
+    max-width: 402px;
     height: 200px;
     padding: 15px;
   }
