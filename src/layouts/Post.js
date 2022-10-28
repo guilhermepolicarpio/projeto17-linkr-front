@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import {CgTrashEmpty as Trash} from "react-icons/cg";
 import { FiHeart as Heart } from "react-icons/fi";
-import { GrEdit as Edit } from "react-icons/gr";
-import { BiComment as Comment } from "react-icons/bi";
+import { FaPen as Edit } from "react-icons/fa";
+import { FaComments as Comment } from "react-icons/fa";
 import { BiRepost as Repost } from "react-icons/bi";
 import { ReactTagify } from "react-tagify";
 import { useNavigate } from "react-router-dom";
@@ -17,21 +17,30 @@ export default function Post({ id, url, description, userName, userPic, metaTitl
     return;
   }
 
-
   const tagStyle = {
       fontWeight: 700,
       cursor: 'pointer'
   };
 
-
-
   return (
     <Wrapper>
       <div>
         <img src={userPic} alt="user_picture" />
+        <Heart size={25} color="#FFFFFF" style={{margin: '20px 0 10px 0'}}/>
+        <span>13 likes</span>
+        <Comment size={25} color="#FFFFFF" style={{margin: '20px 0 10px 0'}}/>
+        <span>47 comments</span>
+        <Repost size={28} color="#FFFFFF" style={{margin: '18px 0 9px 0'}}/>
+        <span>3 reposts</span>
       </div>
       <div>
-        <h3>{userName}</h3>
+        <div>
+          <h3>{userName}</h3>
+          <div>
+            <Edit size={16} color="#FFFFFF" />
+            <Trash size={20} color="#FFFFFF" />
+          </div>
+        </div>    
         <ReactTagify tagClicked={chooseHashtag} tagStyle={tagStyle}>
         <h4>{description}</h4>
         </ReactTagify>
@@ -84,21 +93,41 @@ const Wrapper = styled.div`
     line-height: 20px;
   }
 
-  div:nth-child(1) {
+  & > div:nth-child(1) {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
     width: 15%;
   }
+  & > div:nth-child(1) > span {
+    font-family: "Lato", sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    color: #FFFFFF;
+  }
 
-  div:nth-child(2) {
+  & > div:nth-child(2) {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
     width: 90%;
     padding: 10px 35px 20px 10px;
+
+    & > div:nth-child(1) {
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+      align-items: center;
+
+      & > div {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 40px;
+      }
+    }
   }
 
   @media only screen and (max-width: 600px) {
