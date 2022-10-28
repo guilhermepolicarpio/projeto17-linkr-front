@@ -3,7 +3,7 @@ import styled from "styled-components";
 import userContext from "../context/UserContext";
 import { useContext, useEffect, useState} from "react";
 import { useParams } from "react-router-dom";
-import { getUser } from "../service/API";
+import { followUser, getUser, unfollowUser } from "../service/API";
 import Post from "../layouts/Post";
 import { ThreeDots } from "react-loader-spinner";
 import Trending from "../layouts/Trending";
@@ -16,19 +16,68 @@ export default function UserPage(){
     const { userInfos } = useContext(userContext);
     const [userNameTittle, setUserNameTittle] = useState([]);
     const [userNamePicture, setUserNamePicture] = useState([]);
+    const [following, setFollowing] = useState(false);
+    const [followLoading, setFollowLoading] = useState(false);
 
     useEffect(() =>{
+    const config = {
+        headers: {
+            Authorization: `Bearer ${userInfos.token}`,
+        },
+    }
+    console.log("useeffect")
     setLoading(false);
-      getUser(id).then((res) =>{
-        console.log(res.data);
-        console.log(res.data.rows);
-        setUser(res.data.rows);
-        setUserNameTittle(res.data.rows.name);
-        setUserNamePicture(res.data.rows.pictureUrl);
+      getUser(id,config).then((res) =>{
+        setUser(res.data.result)
+        setUserNameTittle(res.data.result[0].name)
+        setUserNamePicture(res.data.result[0].pictureUrl)
+        setFollowing(res.data.follow)
         setLoading(true);
+    })
+    .catch(res=>{
+      console.log(res)
+      alert("Error on show user page")
     })
     }, [id]);
 
+    function followFunction(userId){
+    
+      const config = {
+        headers: {
+          Authorization: `Bearer ${userInfos.token}`,
+        },
+      }
+
+     setFollowLoading(true)
+  
+     if(following){
+      console.log(userId)
+      unfollowUser(userId).then(()=>{
+        console.log("executei following");
+        setFollowing(false);
+        setFollowLoading(false);
+      })
+      .catch(res => {
+        console.log(res)
+        alert("Error on unfollow user");
+        setFollowLoading(false);
+      })
+     }
+     else{
+      console.log(userId)
+      followUser(userId).then(()=>{
+        console.log("executei unfollowing");
+        setFollowing(true);
+        setFollowLoading(false);
+      })
+      .catch(res => {
+        console.log(res)
+        alert("Error on follow user");
+        setFollowLoading(false);
+      })
+     }
+     }
+    
     return(
         <Wrapper>
              <Header/>
@@ -38,7 +87,7 @@ export default function UserPage(){
                 ? <>
                 <UserTittle>
                 <img src={userNamePicture} alt="user avatar" />
-                 <h1> {userNameTittle}' posts</h1>
+                 <h1> {userNameTittle}'s posts</h1>
                  </UserTittle>
                 <Posts>
                   {user.map((item, index) => (
@@ -62,7 +111,21 @@ export default function UserPage(){
               </Posts> 
                   }
              </Feed>
-             <Trending />
+             <Sidebar>
+                <FollowButton follow={following} followLoading={followLoading} onClick ={() => followFunction(userInfos.id)}> 
+                {followLoading? (
+                  <ThreeDots  height={15} />
+                ):
+                (following?
+                  <h1>Unfollow</h1> 
+                    :
+                  <h1>Follow</h1> 
+                )
+                }
+                </FollowButton>
+                <Trending />
+             </Sidebar>
+
              </div>
         </Wrapper>
     )
@@ -101,7 +164,6 @@ const Feed = styled.div`
   min-height: 100vh;
   align-items: center;
   justify-content: start;
-
 
 
   @media only screen and (max-width: 1000px) {
@@ -153,4 +215,30 @@ display: flex;
 flex-direction: column;
 justify-content: center;
 align-items: center;
+`
+
+const FollowButton = styled.div`
+width: 112px;
+height: 31px;
+background: #1877F2;
+border-radius: 5px;
+cursor: pointer;
+display: flex;
+align-items: center;
+justify-content: center;
+
+h1{
+font-family: 'Lato';
+font-style: normal;
+font-weight: 700;
+font-size: 14px;
+line-height: 17px;
+color: #FFFFFF;
+}
+`
+
+const Sidebar = styled.div`
+display: flex;
+flex-direction: column;
+
 `

@@ -33,6 +33,9 @@ export default function Search({setLogout,logout}){
             .then((res) =>{
                 SetSearch(res.data)
             })
+            .catch((res)=>{
+                console.log(res)
+            })
     }
 
     function userPage(id){

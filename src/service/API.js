@@ -52,4 +52,18 @@ function fetchTrendings() {
   const getTrendings = `${URL_BASE}/hashtags/`
   return axios.get(getTrendings);
 }
-export { postSignUp, postLogin, publishPost, fetchPosts, searchUsers,getUser, fetchHashtagPosts, fetchTrendings };
+
+function followUser(userId){
+  console.log("olhaaaafollow")
+  console.log(userId)
+  const followingUser= `${URL_BASE}/follow/${userId}/follow`
+
+   return axios.post(followingUser,createHeaders());
+}
+
+function unfollowUser(userId){
+  const unfollowingUser= `${URL_BASE}/follow/${userId}/unfollow`
+  return axios.post(unfollowingUser,createHeaders());
+}
+
+export { postSignUp, postLogin, publishPost, fetchPosts, searchUsers,getUser, fetchHashtagPosts, fetchTrendings, followUser,unfollowUser };
