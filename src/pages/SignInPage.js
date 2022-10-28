@@ -45,7 +45,7 @@ export default function SignInPage() {
         navigate("/home");
       })
       .catch((error) => {
-        console.log(error);
+        console.log(error.response);
         Swal.fire({
           icon: "error",
           title: "Ops...",

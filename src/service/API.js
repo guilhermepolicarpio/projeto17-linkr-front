@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const URL_BASE = "http://localhost:5000";
+const URL_BASE = "https://grupo2-linkr.herokuapp.com";
 
 function createHeaders() {
   const auth = JSON.parse(localStorage.getItem("linkr"));

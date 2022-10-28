@@ -51,7 +51,7 @@ export default function SignUpPage() {
         Swal.fire({
           icon: "error",
           title: "Ops...",
-          text: `${error.response.data}`,
+          text: `${error.response}`,
         });
         setForm({
           email: "",
@@ -114,7 +114,7 @@ export default function SignUpPage() {
             <ThreeDots color="#FFFFFF" height={20} width={50} />
           </button>
         )}
-        <LinkToSignUpPage to="/login">Switch back to log in</LinkToSignUpPage>
+        <LinkToSignUpPage to="/">Switch back to log in</LinkToSignUpPage>
       </InputsBox>
     </PageContainer>
   );
