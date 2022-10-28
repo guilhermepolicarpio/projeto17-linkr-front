@@ -38,9 +38,9 @@ function searchUsers(user,headers){
   return axios.get(searchUser,headers)
 }
 
-function getUser(id){
+function getUser(id, headers){
   const getUsers = `${URL_BASE}/users/${id}`;
-  return axios.get(getUsers,createHeaders());
+  return axios.get(getUsers,headers)
 }
 
 function fetchHashtagPosts(hashtag) {

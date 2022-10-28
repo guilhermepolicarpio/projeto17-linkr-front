@@ -11,14 +11,20 @@ import { ThreeDots } from "react-loader-spinner";
 import useInterval from "use-interval";
 
 export default function Home() {
-  
   const { userInfos, setUserInfos } = useContext(userContext);
   const { list, setList } = useContext(postsContext);
   const [loading, setLoading] = useState(true);
   const [inputState, setInputState] = useState(false);
-  const[updated,setUpdated]= useState(false);
- const [number, setNumber] = useState(0);
- const [updatedPosts,setUpdatedPosts]= useState([]);
+  const [ number,setNumber]= useState(0);
+  const[updated,setUpdated]=useState(false);
+  const [updatedPosts,setUpdatedPosts]=useState([]);
+  const [count,setCount]= useState(0);
+  const [form, setForm] = useState({
+    url: "",
+    description: "",
+    userId: "",
+  });
+  const [reloadPage,setReloadPage] = useState(false);
 
   useEffect(() => {
     setLoading(false);
@@ -27,42 +33,33 @@ export default function Home() {
         setList(answer.data);
         setLoading(true);
         setNumber(answer.data.length);
-        setUpdated(false);
       })
       .catch((error) => console.log(error));
     if (userInfos === "") {
       setUserInfos(JSON.parse(localStorage.getItem("linkr")));
     }
-  }, []);
+    setReloadPage(false);
+  }, [reloadPage]);
 
   useInterval(()=>{
-    newPosts();
-  },1800);
-
-  function newPosts(){
-    console.log('new')
-    
-    fetchPosts()
-    .then((answer)=>{
-      setUpdatedPosts(answer.data.length);
-    })
-    .catch((error) => console.log(error));
-    
-    console.log(updated);
-    console.log(number);
-    console.log(updatedPosts);
-
-        if( updatedPosts !== number  && typeof(updatedPosts) === 'number' ){      
-          console.log('passando');  
-        setUpdated(true);
-      } 
-  }
-
-  const [form, setForm] = useState({
-    url: "",
-    description: "",
-    userId: "",
-  });
+   newPosts();
+ },1800);
+ 
+ function newPosts(){
+   fetchPosts()
+   .then((answer)=>{
+     setUpdatedPosts(answer.data.length);
+     setCount(updatedPosts-number);
+   })
+   .catch((error) => console.log(error));
+  
+ 
+       if( (updatedPosts !== number  && typeof(updatedPosts) === 'number') && typeof(list)!== 'string' ){     
+       setUpdated(true);
+     } else if(updatedPosts === number){
+      setUpdated(false);
+     }
+ };
 
   function handleForm(e) {
     setForm({
@@ -70,7 +67,7 @@ export default function Home() {
       [e.target.name]: e.target.value,
       userId: userInfos.id,
     });
-  }
+  };
 
   function publishRequest(e) {
     e.preventDefault();
@@ -142,7 +139,7 @@ export default function Home() {
               )}
             </form>
           </Create>
-          {updated ? <UpdatePostsButton onClick={()=> setUpdated(false)}> `${number} new posts, load more!`</UpdatePostsButton> : " " }
+          {updated ? <UpdatePostsButton onClick={()=> {setReloadPage(true)}}> {count} new posts, load more!</UpdatePostsButton> : " " }
           {loading ? (
             <Posts>
               {typeof list !== "string" ? (
@@ -184,7 +181,6 @@ const Posts = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
   h3 {
     font-family: "Lato", sans-serif;
     font-weight: 700;
@@ -201,7 +197,6 @@ const Wrapper = styled.div`
   min-height: 100vh;
   align-items: center;
   justify-content: center;
-
   & > div:nth-child(2) {
     display: flex;
     width: 75%;
@@ -211,7 +206,6 @@ const Wrapper = styled.div`
     padding-top: 160px;
     column-gap: 25px;
   }
-
   @media only screen and (max-width: 600px) {
     & > div:nth-child(2) {
       width: 100%;
@@ -227,7 +221,6 @@ const Feed = styled.div`
   min-height: 100vh;
   align-items: center;
   justify-content: start;
-
   h1 {
     display: flex;
     justify-content: flex-start;
@@ -239,15 +232,12 @@ const Feed = styled.div`
     color: #ffffff;
     margin-bottom: 25px;
   }
-
   @media only screen and (max-width: 1000px) {
     width: 85%;
   }
-
   @media only screen and (max-width: 800px) {
     width: 100%;
   }
-
   @media only screen and (max-width: 600px) {
     width: 100%;
     h1 {
@@ -263,13 +253,11 @@ const Create = styled.div`
   width: 100%;
   border-radius: 15px;
   margin: 25px 0;
-
   img {
     width: 60px;
     height: 60px;
     border-radius: 50%;
   }
-
   h3 {
     font-family: "Lato", sans-serif;
     font-weight: 300;
@@ -277,7 +265,6 @@ const Create = styled.div`
     margin-bottom: 16px;
     color: #707070;
   }
-
   input {
     width: 100%;
     margin: 5px 0;
@@ -290,7 +277,6 @@ const Create = styled.div`
     font-weight: 300;
     font-size: 15px;
   }
-
   textarea {
     width: 100%;
     margin: 5px 0;
@@ -305,21 +291,18 @@ const Create = styled.div`
     font-size: 15px;
     min-height: 90px;
   }
-
   input::placeholder {
     color: #949494;
     font-family: "Lato", sans-serif;
     font-weight: 300;
     font-size: 15px;
   }
-
   textarea::placeholder {
     color: #949494;
     font-family: "Lato", sans-serif;
     font-weight: 300;
     font-size: 15px;
   }
-
   div:nth-child(1) {
     display: flex;
     flex-direction: column;
@@ -329,7 +312,6 @@ const Create = styled.div`
     padding: 15px;
     min-width: 60px;
   }
-
   form {
     display: flex;
     flex-direction: column;
@@ -338,7 +320,6 @@ const Create = styled.div`
     width: 85%;
     padding: 25px 25px 25px 0;
   }
-
   button {
     width: 120px;
     align-self: flex-end;
@@ -354,16 +335,13 @@ const Create = styled.div`
     font-size: 14px;
     background-color: #1877f2;
   }
-
   @media only screen and (max-width: 600px) {
     border-radius: 0;
-
     div:nth-child(2) {
       padding: 10px 10px;
     }
   }
-`;
-
+`
 const UpdatePostsButton = styled.button`
 width: 611px;
 height: 61px;
@@ -372,5 +350,4 @@ top: 481px;
 background: #1877F2;
 box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 border-radius: 16px;
-border: none;
 `
