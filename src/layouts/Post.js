@@ -44,7 +44,7 @@ export default function Post({ id, url, description, userName, userPic, metaTitl
         <ReactTagify tagClicked={chooseHashtag} tagStyle={tagStyle}>
         <h4>{description}</h4>
         </ReactTagify>
-        <Metadata onClick={() => window.open(url, '_blank')} >
+        <Metadata onClick={() => window.open(url, '_blank')}>
           <div>
             <h2>{metaTitle}</h2>
             <h4>

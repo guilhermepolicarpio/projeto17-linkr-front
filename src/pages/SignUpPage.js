@@ -51,7 +51,7 @@ export default function SignUpPage() {
         Swal.fire({
           icon: "error",
           title: "Ops...",
-          text: `${error.response.data}`,
+          text: `${error.response}`,
         });
         setForm({
           email: "",

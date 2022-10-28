@@ -18,19 +18,14 @@ export default function UserPage(){
     const [userNamePicture, setUserNamePicture] = useState([]);
 
     useEffect(() =>{
-    const config = {
-        headers: {
-            Authorization: `Bearer ${userInfos.token}`,
-        },
-    }
     setLoading(false);
-      getUser(id,config).then((res) =>{
-        setUser(res.data)
-        setUserNameTittle(res.data[0].name)
-        setUserNamePicture(res.data[0].pictureUrl)
+      getUser(id).then((res) =>{
+        console.log(res.data);
+        console.log(res.data.rows);
+        setUser(res.data.rows);
+        setUserNameTittle(res.data.rows.name);
+        setUserNamePicture(res.data.rows.pictureUrl);
         setLoading(true);
-       
-
     })
     }, [id]);
 
