@@ -25,10 +25,12 @@ export default function Home() {
     description: "",
     userId: "",
   });
+  const [publishButton,setPublishButton] = useState(false);
   const [reloadPage,setReloadPage] = useState(false);
 
   useEffect(() => {
     setLoading(false);
+    setPublishButton(false);
     if (userInfos === "") {
       setUserInfos(JSON.parse(localStorage.getItem("linkr")));
     }
@@ -45,7 +47,7 @@ export default function Home() {
 
   useInterval(()=>{
    newPosts();
- },1800);
+ },20000);
  
  function newPosts(){
    fetchPosts()
@@ -74,13 +76,13 @@ export default function Home() {
   function publishRequest(e) {
     e.preventDefault();
     setInputState(true);
-    setLoading(false);
+    setPublishButton(true);
 
     publishPost(form)
       .then((res) => {
         fetchPosts().then((answer) => {
           setList(answer.data);
-          setLoading(true);
+          setPublishButton(false);
           setInputState(false);
           setForm({
             url: "",
@@ -134,10 +136,10 @@ export default function Home() {
                 onChange={handleForm}
                 disabled={inputState}
               ></textarea>
-              {loading ? (
-                <button type="submit">Publish</button>
-              ) : (
+              {publishButton ? (
                 <button disabled={inputState}>Publishing...</button>
+              ) : (
+                <button type="submit">Publish</button>
               )}
             </form>
           </Create>
