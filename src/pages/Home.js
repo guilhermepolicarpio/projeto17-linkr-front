@@ -28,16 +28,17 @@ export default function Home() {
 
   useEffect(() => {
     setLoading(false);
+    if (userInfos === "") {
+      setUserInfos(JSON.parse(localStorage.getItem("linkr")));
+    }
     fetchPosts()
       .then((answer) => {
         setList(answer.data);
         setLoading(true);
-        setNumber(answer.data.length);
+        const postFromFollowers = answer.data.filter(value => value.userName !== userInfos.name);
+        setNumber(postFromFollowers.length);
       })
       .catch((error) => console.log(error));
-    if (userInfos === "") {
-      setUserInfos(JSON.parse(localStorage.getItem("linkr")));
-    }
     setReloadPage(false);
   }, [reloadPage]);
 
@@ -48,13 +49,12 @@ export default function Home() {
  function newPosts(){
    fetchPosts()
    .then((answer)=>{
-     setUpdatedPosts(answer.data.length);
+    const newPostFromFollowers = answer.data.filter(value => value.userName !== userInfos.name);
+     setUpdatedPosts(newPostFromFollowers.length);
      setCount(updatedPosts-number);
    })
    .catch((error) => console.log(error));
-  
- 
-       if( (updatedPosts !== number  && typeof(updatedPosts) === 'number') && typeof(list)!== 'string' ){     
+         if( (updatedPosts !== number  && typeof(updatedPosts) === 'number') && typeof(list)!== 'string' && count > 0){     
        setUpdated(true);
      } else if(updatedPosts === number){
       setUpdated(false);
