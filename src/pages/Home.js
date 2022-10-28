@@ -11,6 +11,7 @@ import { ThreeDots } from "react-loader-spinner";
 import useInterval from "use-interval";
 
 export default function Home() {
+  
   const { userInfos, setUserInfos } = useContext(userContext);
   const { list, setList } = useContext(postsContext);
   const [loading, setLoading] = useState(true);
@@ -54,6 +55,7 @@ export default function Home() {
      setCount(updatedPosts-number);
    })
    .catch((error) => console.log(error));
+   console.log(count);
          if( (updatedPosts !== number  && typeof(updatedPosts) === 'number') && typeof(list)!== 'string' && count > 0){     
        setUpdated(true);
      } else if(updatedPosts === number){
