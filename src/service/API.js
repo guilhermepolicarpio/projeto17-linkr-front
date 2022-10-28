@@ -52,4 +52,9 @@ function fetchTrendings() {
   const getTrendings = `${URL_BASE}/hashtags/`
   return axios.get(getTrendings);
 }
+
+function deletePosts(id){
+  const deletePost = `${URL_BASE}/posts/${id}`;
+  return axios.delete(deletePost);
+}
 export { postSignUp, postLogin, publishPost, fetchPosts, searchUsers,getUser, fetchHashtagPosts, fetchTrendings };

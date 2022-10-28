@@ -6,10 +6,43 @@ import { FaComments as Comment } from "react-icons/fa";
 import { BiRepost as Repost } from "react-icons/bi";
 import { ReactTagify } from "react-tagify";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import Modal from "react-modal";
+import { deletePosts } from "../service/API.js"
+
+Modal.setAppElement(".root");
 
 export default function Post({ id, url, description, userName, userPic, metaTitle, image, metaDescription }) {
 
   const navigate = useNavigate();
+  const [modalIsOpen, setIsOpen] = useState(false);
+
+  function handleOpenModal(){
+    setIsOpen(true);
+  }
+
+  function handleCloseModal(){
+    setIsOpen(false);
+  }
+
+  function closeModal(){
+    setIsOpen(false);
+
+  }
+
+  const customStyles = {
+    content: {
+      top: '50%',
+      left: '50%',
+      right: 'auto',
+      bottom: 'auto',
+      marginRight: '-50%',
+      transform: 'translate(-50%, -50%)',
+      background: 'black',
+      color: '#ffffff',
+      fontSize: '34px',
+    },
+  };
 
   function chooseHashtag(hash) {
     let hashtag = hash.split("#")[1];
@@ -38,7 +71,18 @@ export default function Post({ id, url, description, userName, userPic, metaTitl
           <h3>{userName}</h3>
           <div>
             <Edit size={16} color="#FFFFFF" />
-            <Trash size={20} color="#FFFFFF" />
+            <Trash size={20} color="#FFFFFF" onClick={handleOpenModal} />
+            <Modal
+            isOpen={modalIsOpen}
+            onRequestClose={handleCloseModal}
+            style={customStyles} 
+            >
+
+            <h3>Are you sure you want to delete this post?</h3>
+            <ButtonYes>No, go back!</ButtonYes>
+            <button className="yes">Yes, delete it</button>
+
+            </Modal>
           </div>
         </div>    
         <ReactTagify tagClicked={chooseHashtag} tagStyle={tagStyle}>
@@ -69,6 +113,7 @@ const Wrapper = styled.div`
   border-radius: 15px;
   margin: 15px 0;
   padding: 15px;
+
 
   & > div > img {
     width: 60px;
@@ -140,6 +185,24 @@ const Wrapper = styled.div`
     }
   }
 `;
+
+
+
+const look = styled.h3`
+
+color: aliceblue;
+
+`
+
+const ButtonYes = styled.button`
+  border-radius: 5px;
+  border: none;
+  font-size: 19px;
+  color: #1877F2;
+  background-color: #ffffff;
+
+`
+
 
 const Metadata = styled.div`
   display: flex;
